@@ -1,0 +1,101 @@
+{
+  "_comment": "Year-specific structural assumptions for the CCTS CCC model (2026-2029). Editable in the UI under Multi-Year Rules.",
+  "years": [
+    2026,
+    2027,
+    2028,
+    2029
+  ],
+  "2026": {
+    "corporate_office_emission_deduction_pct": 2.0,
+    "base_compliance_year": 2026,
+    "target_intensity_year": "2025-26",
+    "baseline_ghg_intensity_year": "2023-24",
+    "default_banking_carry_forward_pct": 0,
+    "price_floor_inr": 600,
+    "price_cap_inr": 1600,
+    "price_step_inr": 25,
+    "n_ccc_simulations": 10000,
+    "n_price_sessions": 5000,
+    "random_seed": 42
+  },
+  "2027": {
+    "corporate_office_emission_deduction_pct": 2.0,
+    "base_compliance_year": 2027,
+    "target_intensity_year": "2026-27",
+    "baseline_ghg_intensity_year": "2023-24",
+    "banking_allowed": true,
+    "default_banking_carry_forward_pct": 0,
+    "price_floor_inr": 600,
+    "price_cap_inr": 1600,
+    "price_step_inr": 25,
+    "n_ccc_simulations": 10000,
+    "n_price_sessions": 5000,
+    "random_seed": 42,
+    "uk_cbam_effective": true,
+    "uk_cbam_sectors": [
+      "Aluminium",
+      "Cement",
+      "Fertilisers",
+      "Hydrogen",
+      "Iron & Steel"
+    ]
+  },
+  "2028": {
+    "corporate_office_emission_deduction_pct": 2.0,
+    "base_compliance_year": 2028,
+    "target_intensity_year": "2027-28",
+    "baseline_ghg_intensity_year": "2023-24",
+    "banking_allowed": true,
+    "default_banking_carry_forward_pct": 0,
+    "price_floor_inr": 600,
+    "price_cap_inr": 1600,
+    "price_step_inr": 25,
+    "n_ccc_simulations": 10000,
+    "n_price_sessions": 5000,
+    "random_seed": 42,
+    "uk_cbam_effective": true,
+    "uk_cbam_sectors": [
+      "Aluminium",
+      "Cement",
+      "Fertilisers",
+      "Hydrogen",
+      "Iron & Steel"
+    ]
+  },
+  "2029": {
+    "corporate_office_emission_deduction_pct": 2.0,
+    "base_compliance_year": 2029,
+    "target_intensity_year": "2028-29",
+    "baseline_ghg_intensity_year": "2023-24",
+    "banking_allowed": true,
+    "default_banking_carry_forward_pct": 0,
+    "price_floor_inr": 600,
+    "price_cap_inr": 1600,
+    "price_step_inr": 25,
+    "n_ccc_simulations": 10000,
+    "n_price_sessions": 5000,
+    "random_seed": 42,
+    "uk_cbam_effective": true,
+    "uk_cbam_sectors": [
+      "Aluminium",
+      "Cement",
+      "Fertilisers",
+      "Hydrogen",
+      "Iron & Steel"
+    ]
+  },
+  "sector_total_2024_emissions_mtco2": {
+    "Cement": 251.52,
+    "Aluminium": 74.57,
+    "Chlor-Alkali": 9.81,
+    "Pulp & Paper": 9.67
+  },
+  "currency": {
+    "inr_per_usd": 83.5,
+    "eu_ets_price_eur_per_tco2": 85.0,
+    "uk_cbam_rate_gbp_per_tco2": 45.0,
+    "inr_per_eur": 90.0,
+    "inr_per_gbp": 105.0
+  }
+}
