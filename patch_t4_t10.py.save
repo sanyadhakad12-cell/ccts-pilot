@@ -1,2 +1,0 @@
-python3 patch_t4_t10.py && python3 -m py_compile app.py engine/*.py && pkill -f streamlit; sleep 1; python3 -m streamlit run app.py
-
