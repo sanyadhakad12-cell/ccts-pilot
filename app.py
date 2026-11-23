@@ -8,6 +8,7 @@ from __future__ import annotations
 import os
 os.environ['MPLCONFIGDIR'] = '/tmp'
 import io
+import base64
 import json
 import glob
 import datetime
@@ -57,6 +58,16 @@ APP_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_DIR = os.path.join(APP_DIR, "config")
 EXCEL_PATH = os.path.join(APP_DIR, "3. Data sheet.xlsx")
 LOGO_PATH = os.path.join(APP_DIR, "assets", "climactio_logo.png")
+
+@st.cache_data
+def get_logo_base64() -> str:
+    if os.path.exists(LOGO_PATH):
+        try:
+            with open(LOGO_PATH, "rb") as f:
+                return base64.b64encode(f.read()).decode("utf-8")
+        except Exception:
+            return ""
+    return ""
 
 N_CCC_SIM = 10_000
 N_PRICE_SESSIONS = 5_000
@@ -655,12 +666,14 @@ def render_climactio_footer():
     email_color = "#38bdf8" if dark else "#059669"
     addr_color = "#cbd5e1" if dark else "#334155"
     copy_color = "#64748b"
+    logo_b64 = get_logo_base64()
+    logo_img_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 34px; object-fit: contain; margin-right: 6px; vertical-align: middle;">' if logo_b64 else ''
     
     html_code = f"""<div class="climactio-website-footer" style="margin-top: auto; margin-left: -5rem; margin-right: -5rem; margin-bottom: -5rem; padding: 40px 5rem 36px 5rem; background-color: {bg_color}; border-top: 1.5px solid {border_color}; border-left: none; border-right: none; border-bottom: none; border-radius: 0px; color: {title_color}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid {border_color};">
 <div style="max-width: 460px;">
 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-<div style="width: 32px; height: 32px; border-radius: 6px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; text-align: center; line-height: 32px; font-size: 18px; font-weight: 900;">C</div>
+{logo_img_tag}
 <span style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: {title_color};">CLIMACTIO</span>
 <span style="background: rgba(16,185,129,0.18); color: #059669; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px;">CLIC</span>
 </div>
@@ -668,7 +681,7 @@ def render_climactio_footer():
 <b style="color: {title_color};">CLIC</b> — Climactio Intelligence for CCTS
 </div>
 <div style="font-size: 12.5px; color: {copy_color}; line-height: 1.5;">
-Climactio Private Services Limited • Sovereign Carbon Market Analytics & Compliance Intelligence OS
+Climactio Private Services Limited • Enterprise Carbon Market Analytics & Compliance Intelligence OS
 </div>
 </div>
 <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px;">
@@ -709,7 +722,7 @@ Bangalore – 560048
 # ---------------------------------------------------------------------------
 def render_knowledge_base_faq(portal_type: str = "corporate"):
     st.markdown("""
-    ### ❓ CLIC Knowledge Base & Institutional FAQs
+    ### ❓ CLIC Knowledge Base & Comprehensive FAQs
     **Climactio Intelligence for CCTS (CLIC)** • Operational, Economic, and Policy Guidance.
     """)
     st.info("💡 **Interactive Search**: Use the search bar below or browse the categorized sections to understand every mathematical model, policy lever, bidding engine, and statutory rule in CLIC.")
@@ -721,8 +734,8 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
         {
             "cat": "🏛️ Core Framework & Governance",
             "q": "What is CLIC and what is its official purpose?",
-            "a": """**CLIC** stands for **Climactio Intelligence for CCTS**, developed by **Climactio Private Services Limited**.
-            It is India's sovereign institutional simulation, pricing, and compliance risk analytics platform designed for the Indian Carbon Credit Trading Scheme (CCTS) established under the Energy Conservation (Amendment) Act 2022. It enables both corporate treasuries and the national market authority to model 10,000-draw Monte Carlo compliance risks, execute merit-order double-auction price discovery, evaluate MACC decarbonization levers, and assess EU CBAM Article 9 export deductions."""
+            "a": """**CLIC** stands for **Climactio Intelligence for CCTS**, developed and operated by **Climactio Private Services Limited**.
+            It is Climactio's proprietary enterprise simulation, pricing, and compliance risk analytics platform designed for the Indian Carbon Credit Trading Scheme (CCTS). Developed by Climactio Private Services Limited, it enables corporate treasuries, sustainability directors, plant heads, and compliance officers to model 10,000-draw Monte Carlo compliance risks, execute merit-order double-auction price discovery, evaluate MACC decarbonization levers, and assess EU CBAM Article 9 export deductions."""
         },
         {
             "cat": "🏛️ Core Framework & Governance",
@@ -832,8 +845,8 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
         # Category 6: Simulation Controls & Workflow
         {
             "cat": "🚀 Simulation Controls & Execution Workflow",
-            "q": "What does the green '🚀 Run End-to-End Institutional Simulation' button do?",
-            "a": """It executes the complete sovereign analytics pipeline in a synchronized multi-stage workflow:
+            "q": "What does the green '🚀 Run Full End-to-End Simulation' button do?",
+            "a": """It executes the complete end-to-end analytics pipeline in a synchronized multi-stage workflow:
             1. Ingests all 248 plant inputs and compliance year overrides.
             2. Runs 10,000 Monte Carlo draws across all facilities.
             3. Feeds stochastic supply and demand volumes into the 5 double-auction price discovery engines.
@@ -867,11 +880,11 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
         {
             "cat": "📋 Data Governance & Support",
             "q": "How do facilities submit verified compliance data in the Intake Form?",
-            "a": """Authorized plant energy managers navigate to the **Multi-Year Data Intake Form (2027–2029)**, select their industrial sector, enter verified production, energy, and emissions audit data, and sign the digital declaration. The submission is permanently recorded in the CCTS Market Authority registry."""
+            "a": """Authorized plant energy managers navigate to the **Multi-Year Data Intake Form (2027–2029)**, select their industrial sector, enter verified production, energy, and emissions audit data, and sign the digital declaration. The submission is securely recorded in the Climactio Administrative database for corporate portfolio compliance analysis."""
         },
         {
             "cat": "📋 Data Governance & Support",
-            "q": "How can I contact Climactio Private Services Limited for sovereign advisory or technical support?",
+            "q": "How can I contact Climactio Private Services Limited for enterprise advisory or technical support?",
             "a": """**Climactio Private Services Limited**
             - **Phone:** +91 8660310017
             - **Email:** Kaustav@Climactio.In
@@ -931,7 +944,7 @@ _ss("corp_auction_overrides", {})
 # ---------------------------------------------------------------------------
 # Climactio Institutional Branding Helpers
 # ---------------------------------------------------------------------------
-def render_climactio_header(subtitle: str = "Institutional Carbon Market Architecture & Simulation Engine"):
+def render_climactio_header(subtitle: str = "Enterprise Carbon Market Architecture & Simulation Engine"):
     c1, c2 = st.columns([1.2, 6.8])
     with c1:
         if os.path.exists(LOGO_PATH):
@@ -955,8 +968,21 @@ def render_climactio_header(subtitle: str = "Institutional Carbon Market Archite
 
 def render_company_header(comp_name: str):
     formatted_name = format_company_name(comp_name)
-    st.markdown(f"## 🏢 {formatted_name} — Obligated Entity Compliance Suite")
-    st.caption("CCTS Sovereign Compliance Portfolio • Designated Consumer Facilities")
+    logo_b64 = get_logo_base64()
+    dark = is_dark_theme()
+    c_title = "#ffffff" if dark else "#0f172a"
+    c_sub = "#cbd5e1" if dark else "#475569"
+    logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 40px; object-fit: contain; margin-right: 14px; vertical-align: middle;">' if logo_b64 else ''
+    st.markdown(
+        f"""<div style="display: flex; align-items: center; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid {'#1e293b' if dark else '#e2e8f0'};">
+{logo_tag}
+<div>
+<div style="font-size: 24px; font-weight: 800; color: {c_title}; line-height: 1.2;">🏢 {formatted_name} — Obligated Entity Compliance Suite</div>
+<div style="font-size: 13px; color: {c_sub}; margin-top: 3px;">CCTS Enterprise Compliance Portfolio • Designated Consumer Facilities</div>
+</div>
+</div>""",
+        unsafe_allow_html=True
+    )
 
 
 def render_sidebar_branding():
@@ -1320,7 +1346,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
                 pass
 
         # Metadata
-        ax_bg.text(0.050, 0.880, f'PROJECT: CCTS Sovereign Advisory & Risk Audit  •  CLIENT: {company_name}  •  ADVISOR: Climactio Engine', color='#1e293b', fontsize=8.0, fontweight='bold')
+        ax_bg.text(0.050, 0.880, f'PROJECT: CCTS Strategic Decarbonization Advisory & Risk Audit  •  CLIENT: {company_name}  •  ADVISOR: Climactio Private Services Limited', color='#1e293b', fontsize=8.0, fontweight='bold')
 
         # Footer
         ax_bg.add_patch(patches.Rectangle((0.035, 0.020), 0.930, 0.035, facecolor='#7d9b7a', edgecolor='none'))
@@ -1345,7 +1371,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
             f"This advisory status report delivers the statutory greenhouse gas compliance standing, "
             f"market price discovery findings, and capital liability audit for {company_name} under Schedule I "
             f"of the Indian Carbon Credit Trading Scheme (CCTS). Across designated industrial installations, "
-            f"our double-auction clearance models quantify sovereign true-up risks, evaluate internal abatement "
+            f"our double-auction clearance models quantify market true-up risks, evaluate internal abatement "
             f"hurdle rates, and establish strategic procurement tranches."
         )
         ax_p1.text(0.050, 0.822, textwrap.fill(raw_overview, width=48), color='#334155', fontsize=7.5, va='top')
@@ -1765,7 +1791,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
 # Landing & Dual-Login Flow (Instant Direct Access)
 # ---------------------------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Split-Screen Enterprise Authentication Flow (Matches Sovereign Standard Design)
+# Split-Screen Enterprise Authentication Flow
 # ---------------------------------------------------------------------------
 if _ss("role") is None:
     # Company options
@@ -1788,13 +1814,15 @@ if _ss("role") is None:
     card_border = "#1e293b" if dark else "#e2e8f0"
     txt_main = "#ffffff" if dark else "#0f172a"
     txt_sub = "#94a3b8" if dark else "#475569"
+    logo_b64 = get_logo_base64()
+    hero_logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 44px; object-fit: contain; margin-right: 6px; vertical-align: middle;">' if logo_b64 else ''
 
     # High-Visibility Header Banner (Zero dark-blue box obscurity)
     hero_html = f"""<div style="background-color: {card_bg}; border-radius: 14px; padding: 30px 36px; border: 1.5px solid {card_border}; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
 <div>
 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-<div style="width: 42px; height: 42px; border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #ffffff;">C</div>
+{hero_logo_tag}
 <span style="font-size: 34px; font-weight: 900; letter-spacing: -0.5px; color: #059669;">CLIC</span>
 <span style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); color: #059669; font-size: 12.5px; font-weight: 800; padding: 3px 12px; border-radius: 20px;">CCTS Intelligence OS</span>
 </div>
@@ -1805,7 +1833,7 @@ Climactio Intelligence for CCTS (Carbon Credit Trading Scheme)
 <div style="text-align: right;">
 <div style="font-size: 11.5px; font-weight: 700; color: {txt_sub}; text-transform: uppercase; letter-spacing: 0.8px;">DEVELOPED & OPERATED BY</div>
 <div style="font-size: 16px; font-weight: 800; color: {txt_main}; margin-top: 3px;">Climactio Private Services Limited</div>
-<div style="font-size: 12.5px; color: #059669; font-weight: 700; margin-top: 4px;">● Institutional Standard Operational</div>
+<div style="font-size: 12.5px; color: #059669; font-weight: 700; margin-top: 4px;">● Climactio Platform Operational</div>
 </div>
 </div>
 </div>"""
@@ -1813,7 +1841,7 @@ Climactio Intelligence for CCTS (Carbon Credit Trading Scheme)
 
     if portal_view == "menu":
         st.markdown("### 🔐 Select Access Portal")
-        st.write("Choose your statutory authorization portal to proceed:")
+        st.write("Choose your authorized portal to proceed:")
 
         col_opt1, col_opt2 = st.columns(2, gap="large")
 
@@ -1910,7 +1938,7 @@ Access plant-specific baseline data, evaluate internal MACC decarbonisation inve
 
 if _ss("role") == "admin":
     render_sidebar_branding()
-    st.sidebar.title("🏛️ Market Authority")
+    st.sidebar.title("🛡️ Climactio Administration")
     st.sidebar.write("Welcome, Administrator")
     st.sidebar.divider()
     if st.sidebar.button("← Logout / Switch Portal", type="secondary", key="back_login_admin"):
@@ -3495,10 +3523,10 @@ Official digital submission interface for plant energy managers, chief engineers
 - **Facility Identification**: Verification of BEE registration number, sector, and commercial capacity.
 - **Operational Figures**: Annual raw production volume, specific power consumption, and thermal energy consumption.
 - **Decarbonisation Milestones**: Planned commissioning dates for WHR, biomass boilers, solar PPAs, or process optimization.
-- **Sync to Admin Vault**: Submissions are cryptographically stamped and automatically routed to the Market Authority Intake Hub for verification and audit approval."""
+- **Sync to Admin Vault**: Submissions are cryptographically stamped and automatically routed to the Climactio Administrative Intake Hub for analysis and filing."""
         )
         st.caption(f"Official Data Intake & Trajectory Filing Protocol — {comp_sec} Industrial Benchmark Template")
-        st.info(f"ℹ️ Complete this official template tailored for the **{comp_sec}** sector to submit multi-year production forecasts, technology decarbonization milestones, capex commissioning pipelines, and treasury compliance strategy. Submitted filings automatically sync with the Climactio Market Authority Intake Hub.")
+        st.info(f"ℹ️ Complete this official template tailored for the **{comp_sec}** sector to submit multi-year production forecasts, technology decarbonization milestones, capex commissioning pipelines, and treasury compliance strategy. Submitted filings automatically sync with the Climactio Administrative Intake Hub.")
 
         intake_dir = os.path.join(CONFIG_DIR, "intake_submissions")
         os.makedirs(intake_dir, exist_ok=True)
@@ -3527,9 +3555,9 @@ Official digital submission interface for plant energy managers, chief engineers
         readiness_score = min(readiness_score, 100)
 
         if readiness_score >= 85:
-            tier_badge = "🟢 AAA — Statutory Sovereign Ready & Protected"
+            tier_badge = "🟢 AAA — Fully Compliance Ready & Protected"
             tier_color = "#059669"
-            tier_desc = "Official statutory compliance dossier active. Zero non-compliance penalty exposure under CCTS Gazette Schedule II."
+            tier_desc = "Official compliance dossier active. Zero non-compliance penalty exposure under CCTS Gazette Schedule II."
         elif readiness_score >= 60:
             tier_badge = "🟡 AA — Substantially Compliant (Pending Final Board Sign-off)"
             tier_color = "#d97706"
@@ -3578,7 +3606,7 @@ Official digital submission interface for plant energy managers, chief engineers
         )
 
         if comp_subs:
-            st.success(f"🟢 **Active Submission On Record**: Found {len(comp_subs)} filing(s) for **{comp}** in the Climactio Market Authority Registry.")
+            st.success(f"🟢 **Active Submission On Record**: Found {len(comp_subs)} filing(s) for **{comp}** in the Climactio Administrative Registry.")
             with st.expander("📄 View Most Recent Intake Submission on File"):
                 try:
                     with open(sorted(comp_subs)[-1], "r", encoding="utf-8") as f_curr_sub:
@@ -3893,8 +3921,21 @@ Official digital submission interface for plant energy managers, chief engineers
 # Admin Portal Main Engine (role == "admin")
 # ---------------------------------------------------------------------------
 if _ss("role") == "admin":
-    st.title("🏛️ CCTS — Market Authority & Policy Simulation Engine")
-    st.caption("National Compliance Registry • 10,000-Iteration Monte Carlo • Sealed Double-Auction Price Discovery • Multi-Year Projections (2026–2030)")
+    logo_b64 = get_logo_base64()
+    dark = is_dark_theme()
+    c_title = "#ffffff" if dark else "#0f172a"
+    c_sub = "#cbd5e1" if dark else "#475569"
+    logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 42px; object-fit: contain; margin-right: 14px; vertical-align: middle;">' if logo_b64 else ''
+    st.markdown(
+        f"""<div style="display: flex; align-items: center; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid {'#1e293b' if dark else '#e2e8f0'};">
+{logo_tag}
+<div>
+<div style="font-size: 26px; font-weight: 800; color: {c_title}; line-height: 1.2;">🛡️ CCTS — Climactio Administrative & Analytical Engine</div>
+<div style="font-size: 13px; color: {c_sub}; margin-top: 3px;">National Compliance Registry • 10,000-Iteration Monte Carlo • Sealed Double-Auction Price Discovery • Multi-Year Projections (2026–2030)</div>
+</div>
+</div>""",
+        unsafe_allow_html=True
+    )
 
     render_news_banner()
 
@@ -4085,7 +4126,7 @@ if _ss("role") == "admin":
 
     # If first time entering Market Admin and no simulation has run yet, auto-run baseline
     if res_df is None and sim_df is not None and not sim_df.empty and not should_run_mc and not should_run_pd:
-        with st.spinner("⚡ Initializing Market Authority Baseline (Demand & Supply MC + Price Discovery)..."):
+        with st.spinner("⚡ Initializing Baseline Market Intelligence (Demand & Supply MC + Price Discovery)..."):
             res_df, summary, plant_balances = run_ccc_monte_carlo(sim_df, n_sim=N_CCC_SIM, seed=SEED)
             st.session_state["res_df"] = res_df
             st.session_state["summary"] = summary
@@ -4245,7 +4286,7 @@ if _ss("role") == "admin":
             "Master Regulated Facility Database • Baseline Verification & Stochastic Operational Parameters",
             """### 📊 Operational Guide: National Facility Input Table
 **Overview**:
-Sovereign master database of all 248 designated consumer industrial facilities registered under India's Carbon Credit Trading Scheme (CCTS) across Cement, Aluminium, Chlor-Alkali, Pulp & Paper, and Steel.
+Master database of all 248 designated consumer industrial facilities registered under India's Carbon Credit Trading Scheme (CCTS) across Cement, Aluminium, Chlor-Alkali, Pulp & Paper, and Steel.
 
 #### 🔒 Statutory Baselines (Fixed & Locked)
 - **Baseline GHG Emission Intensity (GEI)** & **Base Production**: Historical benchmarks verified by BEE accredited carbon verifiers.
@@ -4382,7 +4423,7 @@ Sovereign master database of all 248 designated consumer industrial facilities r
         render_tab_guide(
             "National CCC Monte Carlo Simulation (Demand & Supply)",
             "10,000-Draw Stochastic PERT Model Across India's 248 Regulated Facilities",
-            """### ⚡ Operational Guide: Sovereign Monte Carlo Simulation
+            """### ⚡ Operational Guide: Portfolio Monte Carlo Simulation
 **Overview**:
 Executes a 10,000-iteration stochastic PERT trial across all 248 industrial installations nationwide to determine macro compliance demand and credit liquidity.
 
@@ -5209,7 +5250,7 @@ Dynamic multi-year econometric forecasting engine that extrapolates national CCT
     with tab_news:
         render_tab_guide(
             "Regulatory News & Market Updates Manager",
-            "Sovereign Notification Dispatcher • Live Announcements Across Corporate Portals",
+            "Compliance Notification Dispatcher • Live Announcements Across Client Portals",
             """### 📢 Operational Guide: Regulatory News Manager
 **Overview**:
 Enables administrators to broadcast official regulatory circulars, BEE notifications, trading calendar amendments, and compliance deadlines to all 248 regulated entities.
@@ -5367,7 +5408,7 @@ Enables administrators to broadcast official regulatory circulars, BEE notificat
     with tab_intake:
         render_tab_guide(
             "Multi-Year Data Intake Submissions (2027–2029)",
-            "Climactio Market Authority Intake & Audit Filing Hub",
+            "Climactio Administrative Intake & Filing Hub",
             """### 📋 Operational Guide: Data Intake Submissions Hub
 **Overview**:
 Central administrative repository for reviewing, auditing, and approving multi-year compliance data intake filings submitted by designated consumer companies.
@@ -5493,7 +5534,7 @@ Comprehensive national summary of industrial output, total greenhouse gas emissi
     with tab_company:
         render_tab_guide(
             "Company-Wise & Top 5 National Rankings",
-            "Sovereign Compliance Leaderboard & Corporate Net Credit Positions",
+            "National Compliance Leaderboard & Corporate Net Credit Positions",
             """### 📊 Operational Guide: Company Rankings & Leaderboard
 **Overview**:
 National compliance leaderboard ranking regulated corporate groups by net surplus certificate generation, compliance deficit liability, and emission reduction performance."""
@@ -5572,7 +5613,7 @@ AI-powered document ingestion engine that extracts target intensity schedules an
     # -------------------- Tab 12: Downloads --------------------
     with tab_downloads:
         render_tab_guide(
-            "1-Click Sovereign Excel Downloads & Regulatory Data Room",
+            "1-Click Compliance Excel Downloads & Analytics Data Room",
             "Comprehensive Multi-Sheet Master Model Export & National Audit Workbooks",
             """### 💾 Operational Guide: Downloads & Regulatory Data Room
 **Overview**:
