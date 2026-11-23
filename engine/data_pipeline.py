@@ -337,28 +337,18 @@ def add_sector_column(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+# Official National Industrial Sector Total Baseline Emissions (MoEFCC / BEE / CEEW National MACC benchmarks)
+NATIONAL_SECTOR_TOTAL_EMISSIONS_MTCO2 = {
+    "Cement": 315.0,        # ~315 MtCO2e national cement sector baseline (420 Mt production)
+    "Aluminium": 85.0,      # ~85 MtCO2e primary aluminium smelting baseline (4.1 Mt output)
+    "Chlor-Alkali": 12.5,   # ~12.5 MtCO2e chlor-alkali & vinyls baseline
+    "Pulp & Paper": 16.0,   # ~16.0 MtCO2e organized pulp & paper baseline
+    "Steel": 340.0,         # ~340 MtCO2e iron & steel baseline
+}
+
 def get_sector_emissions_mtco2() -> Dict[str, float]:
-    year_rules = _load_json("year_rules.json")
-    fallback = dict(year_rules.get("sector_total_2024_emissions_mtco2", {}))
-    try:
-        wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True)
-        if "analysis" in wb.sheetnames:
-            ws = wb["analysis"]
-            rows = list(ws.iter_rows(values_only=True))
-            for r in rows[1:]:
-                name = r[1] if len(r) > 1 else None
-                if name is None:
-                    continue
-                name = str(name).strip()
-                emissions = clean_num(r[5]) if len(r) > 5 else None
-                if emissions is None:
-                    continue
-                mt = emissions / 1_000_000.0
-                key = {"Chlor Alkali": "Chlor-Alkali"}.get(name, name)
-                fallback[key] = round(mt, 2)
-    except Exception:
-        pass
-    return fallback
+    """Returns official national sector total emissions (MtCO2) for MACC scaling."""
+    return dict(NATIONAL_SECTOR_TOTAL_EMISSIONS_MTCO2)
 
 
 def load_macc(macc_path: str = MACC_PATH) -> Dict[str, pd.DataFrame]:

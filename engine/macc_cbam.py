@@ -129,8 +129,15 @@ def compute_cbam_liability(
     baseline_gei = plant_row.get("Baseline_GEI", 0) or 0
     emissions_tco2 = actual_prod * baseline_gei
 
-    # Domestic CCTS liability / relief
-    domestic_cost_inr = emissions_tco2 * expected_mcp_inr
+    # Domestic CCTS liability: applies strictly to compliance shortfall (Expected_Purchases_Demand), NOT total gross emissions
+    deficit_tco2 = float(plant_row.get("Expected_Purchases_Demand", 0.0) or 0.0)
+    if deficit_tco2 == 0.0 and "Target_GEI" in plant_row:
+        target_gei = float(plant_row.get("Target_GEI", 0.0) or 0.0)
+        mode_gei = float(plant_row.get("Mode_GEI", plant_row.get("Baseline_GEI", target_gei)) or target_gei)
+        bal = (target_gei - mode_gei) * actual_prod
+        deficit_tco2 = max(0.0, -bal)
+
+    domestic_cost_inr = deficit_tco2 * expected_mcp_inr
 
     # EU CBAM
     eu_emissions = emissions_tco2 * (eu_export_pct / 100.0)

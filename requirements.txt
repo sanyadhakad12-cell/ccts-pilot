@@ -3,7 +3,8 @@ numpy>=1.26.0
 pandas>=2.2.0
 openpyxl>=3.1.0
 
-# PDF text extraction (used by Auto-Update tab)
+# PDF report generation & text extraction
+matplotlib>=3.8.0
 pdfplumber>=0.11.0
 
 # Interactive charts
@@ -12,5 +13,5 @@ plotly>=5.20.0
 # Streamlit web framework
 streamlit>=1.35.0
 
-# Google Generative AI (Auto-Update tab; requires GEMINI_API_KEY)
+# Google Generative AI (Optional: Auto-Update tab; requires GEMINI_API_KEY)
 google-genai>=0.5.0

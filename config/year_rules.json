@@ -7,13 +7,13 @@
     2029
   ],
   "2026": {
-    "corporate_office_emission_deduction_pct": 2.0,
-    "base_compliance_year": 2026,
+    "corporate_office_emission_deduction_pct": 1.91,
+    "base_compliance_year": 2027,
     "target_intensity_year": "2025-26",
     "baseline_ghg_intensity_year": "2023-24",
-    "default_banking_carry_forward_pct": 0,
+    "default_banking_carry_forward_pct": 5,
     "price_floor_inr": 600,
-    "price_cap_inr": 1600,
+    "price_cap_inr": 1610,
     "price_step_inr": 25,
     "n_ccc_simulations": 10000,
     "n_price_sessions": 5000,

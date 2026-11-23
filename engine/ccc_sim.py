@@ -30,6 +30,19 @@ def run_ccc_monte_carlo(
     mode = plants["Mode_GEI"].to_numpy(dtype=float)
     hi = plants["Max_GEI"].to_numpy(dtype=float)
 
+    # Clean NaNs and ensure safe bounds
+    fallback = np.where(~np.isnan(target), target, 0.0)
+    lo = np.where(np.isnan(lo), fallback * 0.98, lo)
+    mode = np.where(np.isnan(mode), fallback, mode)
+    hi = np.where(np.isnan(hi), fallback * 1.02, hi)
+
+    # Ensure lo <= mode <= hi regardless of user input order
+    bounds = np.stack([lo, mode, hi], axis=0)
+    bounds.sort(axis=0)
+    lo = bounds[0]
+    mode = bounds[1]
+    hi = bounds[2]
+
     # Vectorised sampling: shape (n_sim, n_plants).
     # np.random.triangular errors when lo == hi, so handle equal-bound plants
     # by assigning the constant bound directly.
