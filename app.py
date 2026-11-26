@@ -383,12 +383,45 @@ def inject_theme_css():
             font-weight: 600 !important;
         }
 
-        /* 10. Data Tables & Data Editors */
+        /* 10. Data Tables & Data Editors (Executive Soft-Mint & Emerald Border) */
         [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
             background-color: #ffffff !important;
-            border: 1.5px solid #e2e8f0 !important;
+            border: 1.5px solid #d1fae5 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 16px -2px rgba(4, 120, 87, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+            overflow: hidden !important;
+        }
+        [data-testid="stDataFrame"] > div, [data-testid="stDataEditor"] > div {
             border-radius: 10px !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+        }
+        /* Native HTML tables (st.table) */
+        div[data-testid="stTable"] table {
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            border: 1.5px solid #d1fae5 !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+            width: 100% !important;
+        }
+        div[data-testid="stTable"] th {
+            background: linear-gradient(180deg, #ecfdf5 0%, #e6f7ed 100%) !important;
+            color: #064e3b !important;
+            font-weight: 700 !important;
+            font-size: 13px !important;
+            padding: 10px 14px !important;
+            border-bottom: 2px solid #a7f3d0 !important;
+        }
+        div[data-testid="stTable"] td {
+            color: #0f172a !important;
+            padding: 10px 14px !important;
+            border-bottom: 1px solid #f0fdf4 !important;
+            font-size: 13px !important;
+        }
+        div[data-testid="stTable"] tr:nth-child(even) td {
+            background-color: #f7fcf9 !important;
+        }
+        div[data-testid="stTable"] tr:hover td {
+            background-color: #ecfdf5 !important;
         }
 
         /* 11. Alerts, Expanders, & Banners */
@@ -1549,13 +1582,13 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ax_bg.axis('off')
 
         # Frame
-        ax_bg.add_patch(patches.Rectangle((0.035, 0.015), 0.930, 0.970, fill=False, edgecolor='#cbd5e1', linewidth=0.8))
+        ax_bg.add_patch(patches.Rectangle((0.035, 0.015), 0.930, 0.970, fill=False, edgecolor='#d1fae5', linewidth=1.0))
 
         # Top ribbon
         np.random.seed(page_num * 23 + 42)
         x_pts = np.linspace(0.035, 0.965, 14)
         y_pts = np.linspace(0.905, 0.985, 3)
-        colors = ['#d5ce9e', '#c4be86', '#b6c4a6', '#9fb095', '#ced6be', '#e3dec0', '#c8c088', '#a8b89d']
+        colors = ['#064e3b', '#047857', '#059669', '#10b981', '#090d16', '#0f172a', '#065f46', '#14291e']
         for i in range(len(x_pts) - 1):
             for j in range(len(y_pts) - 1):
                 p1 = [x_pts[i], y_pts[j]]
@@ -1565,10 +1598,10 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
                 ax_bg.add_patch(patches.Polygon([p1, p2, p3], closed=True, facecolor=colors[np.random.randint(len(colors))], edgecolor='none', alpha=0.95))
                 ax_bg.add_patch(patches.Polygon([p1, p3, p4], closed=True, facecolor=colors[np.random.randint(len(colors))], edgecolor='none', alpha=0.95))
 
-        # Plaque
-        ax_bg.add_patch(patches.Rectangle((0.550, 0.905), 0.400, 0.076, facecolor='#7d9b7a', edgecolor='none'))
-        ax_bg.text(0.750, 0.948, s_title, color='#ffffff', fontsize=10.5, fontweight='bold', ha='center', va='center')
-        ax_bg.text(0.750, 0.922, s_date, color='#ffffff', fontsize=9.0, fontweight='bold', ha='center', va='center')
+        # Plaque (Obsidian Black & Emerald Glow)
+        ax_bg.add_patch(patches.Rectangle((0.520, 0.905), 0.430, 0.076, facecolor='#090d16', edgecolor='#10b981', linewidth=1.2))
+        ax_bg.text(0.735, 0.948, s_title, color='#ffffff', fontsize=10.0, fontweight='bold', ha='center', va='center')
+        ax_bg.text(0.735, 0.922, f"{s_date}  •  POWERED BY CLIC", color='#10b981', fontsize=8.2, fontweight='bold', ha='center', va='center')
 
         # Logo
         if logo_img is not None:
@@ -1581,12 +1614,12 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
                 pass
 
         # Metadata
-        ax_bg.text(0.050, 0.880, f'PROJECT: CCTS Strategic Decarbonization Advisory & Risk Audit  •  CLIENT: {company_name}  •  ADVISOR: Climactio Private Services Limited', color='#1e293b', fontsize=8.0, fontweight='bold')
+        ax_bg.text(0.050, 0.880, f'SOFTWARE PLATFORM: CLIC (Climactio Intelligence for CCTS)  •  CLIENT: {company_name}  •  ADVISORY: Climactio Enterprise ESG', color='#064e3b', fontsize=7.8, fontweight='bold')
 
         # Footer
-        ax_bg.add_patch(patches.Rectangle((0.035, 0.020), 0.930, 0.035, facecolor='#7d9b7a', edgecolor='none'))
-        ax_bg.text(0.055, 0.037, 'CLIMACTIO MARKET ADVISORY & SIMULATION ENGINE', color='#ffffff', fontsize=7.5, fontweight='bold', va='center')
-        ax_bg.text(0.940, 0.037, f'Page {page_num} of 6', color='#ffffff', fontsize=8.0, fontweight='bold', ha='right', va='center')
+        ax_bg.add_patch(patches.Rectangle((0.035, 0.020), 0.930, 0.035, facecolor='#090d16', edgecolor='#047857', linewidth=1.0))
+        ax_bg.text(0.055, 0.037, 'CLIC — CLIMACTIO INTELLIGENCE FOR CCTS | CONFIDENTIAL ENTERPRISE ADVISORY REPORT', color='#ffffff', fontsize=7.2, fontweight='bold', va='center')
+        ax_bg.text(0.940, 0.037, f'Page {page_num} of 6  •  CLIC v2.4 Enterprise', color='#10b981', fontsize=7.5, fontweight='bold', ha='right', va='center')
 
     with PdfPages(buf) as pdf:
         # =====================================================================
@@ -1601,7 +1634,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ax_p1.axis('off')
 
         # Left Column: Overview & Accomplishment
-        ax_p1.text(0.050, 0.840, 'GENERAL PROJECT OVERVIEW', color='#597558', fontsize=9.5, fontweight='bold')
+        ax_p1.text(0.050, 0.840, 'GENERAL PROJECT OVERVIEW', color='#047857', fontsize=9.5, fontweight='bold')
         raw_overview = (
             f"This advisory status report delivers the statutory greenhouse gas compliance standing, "
             f"market price discovery findings, and capital liability audit for {company_name} under Schedule I "
@@ -1611,15 +1644,15 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         )
         ax_p1.text(0.050, 0.822, textwrap.fill(raw_overview, width=48), color='#334155', fontsize=7.5, va='top')
 
-        ax_p1.text(0.050, 0.690, 'ACCOMPLISHMENT SUMMARY', color='#597558', fontsize=9.5, fontweight='bold')
+        ax_p1.text(0.050, 0.690, 'ACCOMPLISHMENT SUMMARY', color='#047857', fontsize=9.5, fontweight='bold')
         ax_p1.text(0.050, 0.665, textwrap.fill(f"1. Verified production baselines and greenhouse gas intensity (GEI) across {len(active_plants)} reporting facilities.", width=48), color='#334155', fontsize=7.5, va='top')
         ax_p1.text(0.050, 0.620, textwrap.fill("2. Simulated 10,000 Monte Carlo merit-order clearing sessions to establish price volatility thresholds.", width=48), color='#334155', fontsize=7.5, va='top')
         ax_p1.text(0.050, 0.575, textwrap.fill("3. Benchmarked marginal abatement technology costs against clearing prices to minimize outflows.", width=48), color='#334155', fontsize=7.5, va='top')
 
         # Left Column: Board Action Memorandum
-        ax_p1.text(0.050, 0.515, 'BOARD OF DIRECTORS ACTION MEMORANDUM', color='#597558', fontsize=9.5, fontweight='bold')
-        ax_p1.add_patch(patches.Rectangle((0.050, 0.075), 0.430, 0.420, facecolor='#f4f7f4', edgecolor='#7d9b7a', linewidth=1.0))
-        ax_p1.text(0.065, 0.470, 'FORMAL BOARD STATUTORY RESOLUTION MANDATE', color='#142617', fontsize=8.0, fontweight='bold')
+        ax_p1.text(0.050, 0.515, 'BOARD OF DIRECTORS ACTION MEMORANDUM', color='#047857', fontsize=9.5, fontweight='bold')
+        ax_p1.add_patch(patches.Rectangle((0.050, 0.075), 0.430, 0.420, facecolor='#f0fdf4', edgecolor='#047857', linewidth=1.2))
+        ax_p1.text(0.065, 0.470, 'FORMAL BOARD STATUTORY RESOLUTION MANDATE (CLIC ADVISORY)', color='#064e3b', fontsize=7.8, fontweight='bold')
         m_items = [
             ('• Statutory Authorization Directive:', 'Formally empower the CFO and Head of Sustainability to execute compliance filings under CCTS Schedule I.'),
             ('• Capex Commitment Resolution:', f"Sanction immediate engineering DPRs for technical interventions below market clearing price (₹{emcp:,.0f}/tCO2)."),
@@ -1628,7 +1661,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ]
         ym = 0.435
         for lbl, txt in m_items:
-            ax_p1.text(0.065, ym, lbl, color='#597558', fontsize=7.5, fontweight='bold')
+            ax_p1.text(0.065, ym, lbl, color='#047857', fontsize=7.5, fontweight='bold')
             ax_p1.text(0.065, ym - 0.020, textwrap.fill(txt, width=44), color='#334155', fontsize=7.0, va='top')
             ym -= 0.082
 
@@ -1640,10 +1673,10 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
             for idx, (xp, opt) in enumerate(zip(x_pts_tr, options)):
                 is_act = (idx == active_idx)
                 if is_act:
-                    ax.scatter([xp], [y_pos + 0.004], s=260, facecolor='#142617', edgecolor='#ffffff', linewidth=1.5, zorder=4)
-                    ax.text(xp, y_pos - 0.018, opt, color='#142617', fontsize=7.0, fontweight='bold', ha='center')
+                    ax.scatter([xp], [y_pos + 0.004], s=260, facecolor='#064e3b', edgecolor='#ffffff', linewidth=1.5, zorder=4)
+                    ax.text(xp, y_pos - 0.018, opt, color='#064e3b', fontsize=7.0, fontweight='bold', ha='center')
                 else:
-                    ax.scatter([xp], [y_pos + 0.004], s=140, facecolor='#ffffff', edgecolor='#7d9b7a', linewidth=1.5, zorder=3)
+                    ax.scatter([xp], [y_pos + 0.004], s=140, facecolor='#ffffff', edgecolor='#10b981', linewidth=1.5, zorder=3)
                     ax.text(xp, y_pos - 0.018, opt, color='#64748b', fontsize=6.8, ha='center')
 
         draw_scatter_tracker(ax_p1, 0.780, 'PROJECT SCHEDULE / COMPLIANCE TIMELINE', ['Critical', 'Satisfactory', 'Good'], 2)
@@ -1678,10 +1711,10 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ax_p2.set_ylim(0, 1)
         ax_p2.axis('off')
 
-        ax_p2.text(0.050, 0.865, 'PROJECT MILESTONES & STATUTORY TIMELINE', color='#597558', fontsize=10.0, fontweight='bold')
+        ax_p2.text(0.050, 0.865, 'PROJECT MILESTONES & STATUTORY TIMELINE', color='#047857', fontsize=10.0, fontweight='bold')
 
         # Ribbon Container
-        ax_p2.add_patch(patches.Rectangle((0.050, 0.700), 0.900, 0.145, facecolor='#f4f7f4', edgecolor='#cbd5e1', linewidth=0.8))
+        ax_p2.add_patch(patches.Rectangle((0.050, 0.700), 0.900, 0.145, facecolor='#f0fdf4', edgecolor='#d1fae5', linewidth=1.0))
         ax_p2.plot([0.08, 0.92], [0.785, 0.785], color='#cbd5e1', linewidth=2.0, zorder=3)
 
         ms_nodes = [
@@ -1693,21 +1726,21 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ]
 
         for name, dt, status, icn, xp in ms_nodes:
-            ax_p2.scatter([xp], [0.785], s=550, facecolor='#ffffff', edgecolor='#7d9b7a', linewidth=2.0, zorder=4)
-            ax_p2.text(xp, 0.785, icn, color='#142617', fontsize=8.0, fontweight='bold', ha='center', va='center', zorder=5)
+            ax_p2.scatter([xp], [0.785], s=550, facecolor='#ffffff', edgecolor='#047857', linewidth=2.0, zorder=4)
+            ax_p2.text(xp, 0.785, icn, color='#064e3b', fontsize=8.0, fontweight='bold', ha='center', va='center', zorder=5)
             ax_p2.text(xp, 0.752, name, color='#142617', fontsize=6.8, fontweight='bold', ha='center', va='top')
             ax_p2.text(xp, 0.722, dt, color='#64748b', fontsize=6.2, ha='center', va='top')
             ax_p2.text(xp, 0.710, status, color='#059669' if status in ('Completed', 'Recommended') else '#b91c1c', fontsize=6.2, fontweight='bold', ha='center', va='top')
 
         # Targets & Tasks
-        ax_p2.text(0.050, 0.655, 'TARGET STATUTORY DEADLINE:', color='#597558', fontsize=8.0, fontweight='bold')
+        ax_p2.text(0.050, 0.655, 'TARGET STATUTORY DEADLINE:', color='#047857', fontsize=8.0, fontweight='bold')
         ax_p2.text(0.050, 0.635, 'JULY 31, 2027', color='#0f172a', fontsize=11.0, fontweight='bold')
-        ax_p2.text(0.050, 0.600, 'REVISED COMPLETION PROJECTION:', color='#597558', fontsize=8.0, fontweight='bold')
+        ax_p2.text(0.050, 0.600, 'REVISED COMPLETION PROJECTION:', color='#047857', fontsize=8.0, fontweight='bold')
         ax_p2.text(0.050, 0.580, 'JUNE 15, 2027 (PRE-CLOSURE)', color='#0f172a', fontsize=11.0, fontweight='bold')
-        ax_p2.text(0.050, 0.545, 'RECOMMENDED PROCUREMENT CEILING:', color='#597558', fontsize=8.0, fontweight='bold')
+        ax_p2.text(0.050, 0.545, 'RECOMMENDED PROCUREMENT CEILING:', color='#047857', fontsize=8.0, fontweight='bold')
         ax_p2.text(0.050, 0.525, f'₹{p90_val:,.0f} / CCC (P90 VAR CAP)', color='#059669', fontsize=11.0, fontweight='bold')
 
-        ax_p2.text(0.520, 0.655, 'QUARTERLY STRATEGIC REVIEW CALENDAR:', color='#597558', fontsize=8.2, fontweight='bold')
+        ax_p2.text(0.520, 0.655, 'QUARTERLY STRATEGIC REVIEW CALENDAR:', color='#047857', fontsize=8.2, fontweight='bold')
         tasks = [
             '• Q1 (Aug–Oct): Deploy Tranche 1 (35% volume) at session opening lows (~P50 price).',
             '• Q2 (December): Mid-Cycle Tranche 2 (35% volume) to hedge production deviations.',
@@ -1722,7 +1755,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         # Table: Plant-by-Plant Budget Allocation Matrix
         ax_reg = fig2.add_axes([0.050, 0.080, 0.900, 0.400])
         ax_reg.axis('off')
-        ax_reg.text(0.0, 0.98, 'PLANT-BY-PLANT STATUTORY COMPLIANCE & BUDGET ALLOCATION MATRIX', color='#142617', fontsize=9.2, fontweight='bold')
+        ax_reg.text(0.0, 0.98, 'PLANT-BY-PLANT STATUTORY COMPLIANCE & BUDGET ALLOCATION MATRIX (CLIC REGISTRY)', color='#064e3b', fontsize=9.2, fontweight='bold')
 
         t1_rows = [["Reg ID", "Facility Name", "Target GEI", "Compliance Balance", "Budget @ MCP (₹)", "P90 VaR Reserve (₹)"]]
         src_table = my_res if (my_res is not None and not my_res.empty) else active_plants
@@ -1754,10 +1787,10 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         t1.auto_set_font_size(False); t1.set_fontsize(7.5); t1.scale(1.0, 1.45)
         for (r_i, c_i), cell in t1.get_celld().items():
             if r_i == 0:
-                cell.set_facecolor('#597558'); cell.set_text_props(color='#ffffff', weight='bold')
+                cell.set_facecolor('#047857'); cell.set_text_props(color='#ffffff', weight='bold')
             else:
-                cell.set_facecolor('#f8fafc' if r_i % 2 == 0 else '#ffffff')
-            cell.set_edgecolor('#cbd5e1')
+                cell.set_facecolor('#f0fdf4' if r_i % 2 == 0 else '#ffffff')
+            cell.set_edgecolor('#d1fae5')
 
         pdf.savefig(fig2, facecolor='#ffffff')
         plt.close(fig2)
@@ -1789,7 +1822,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         for spine in ["top", "right"]: ax_pr.spines[spine].set_visible(False)
         for spine in ["bottom", "left"]: ax_pr.spines[spine].set_color('#cbd5e1')
         if price_tick is not None and not price_tick.empty:
-            ax_pr.bar(price_tick["Price_Tick_INR"], price_tick["Assigned_Probability"] * 100, color='#597558', alpha=0.85, width=18, label='Clearing Probability (%)')
+            ax_pr.bar(price_tick["Price_Tick_INR"], price_tick["Assigned_Probability"] * 100, color='#047857', alpha=0.85, width=18, label='Clearing Probability (%)')
             ax_pr.axvline(emcp, color='#0284c7', linestyle='--', linewidth=1.5, label=f'Expected MCP ₹{emcp:.0f}')
             ax_pr.axvline(p90_val, color='#dc2626', linestyle=':', linewidth=1.5, label=f'P90 Risk Cap ₹{p90_val:.0f}')
             ax_pr.set_title("Market Clearing Probability Density & Liquidity Depth", color='#142617', fontsize=9.2, fontweight='bold', pad=8)
@@ -1823,7 +1856,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
 
         ax_p4_txt = fig4.add_axes([0, 0, 1, 1])
         ax_p4_txt.set_xlim(0, 1); ax_p4_txt.set_ylim(0, 1); ax_p4_txt.axis('off')
-        ax_p4_txt.text(0.050, 0.865, 'QUANTITATIVE TREASURY SENSITIVITY & PROCUREMENT TIMING', color='#597558', fontsize=9.5, fontweight='bold')
+        ax_p4_txt.text(0.050, 0.865, 'QUANTITATIVE TREASURY SENSITIVITY & PROCUREMENT TIMING', color='#047857', fontsize=9.5, fontweight='bold')
 
         # Graph 4: Treasury Sensitivity Tornado Chart
         ax_tor = fig4.add_axes([0.28, 0.585, 0.64, 0.245])
@@ -1894,8 +1927,8 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         # Guidance Card below
         ax_gcard = fig4.add_axes([0.050, 0.075, 0.900, 0.155])
         ax_gcard.axis('off')
-        ax_gcard.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f4f7f4', edgecolor='#7d9b7a', linewidth=1.0))
-        ax_gcard.text(0.025, 0.88, "INSTITUTIONAL DOLLAR-COST-AVERAGING & TRANCHE PROCUREMENT PLAYBOOK", color='#142617', fontsize=8.5, fontweight='bold')
+        ax_gcard.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f0fdf4', edgecolor='#047857', linewidth=1.2))
+        ax_gcard.text(0.025, 0.88, "INSTITUTIONAL DOLLAR-COST-AVERAGING & TRANCHE PROCUREMENT PLAYBOOK (CLIC ADVISORY)", color='#064e3b', fontsize=8.5, fontweight='bold')
         ax_gcard.text(0.025, 0.68, f"• Tranche 1 (35% in Q1 Aug-Oct at ~₹{p50_val:,.0f}/CCC): Secure initial volume early before annual audit true-up squeeze.", color='#334155', fontsize=7.2)
         ax_gcard.text(0.025, 0.48, f"• Tranche 2 (35% in Q2 Dec at ~₹{emcp:,.0f}/CCC): Mid-cycle hedging order to smooth volatility and absorb output deviations.", color='#334155', fontsize=7.2)
         ax_gcard.text(0.025, 0.28, f"• Tranche 3 (30% in Q3 Apr pre-audit): Final balancing purchase. Avoid June-July rush when price approaches P90 (₹{p90_val:,.0f}).", color='#334155', fontsize=7.2)
@@ -1918,7 +1951,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
             ms_plot = macc_table.dropna(subset=["Cost_INR_tCO2"]).sort_values("Cost_INR_tCO2").head(8)
             levers = [str(l)[:22] for l in ms_plot.get("Lever", ms_plot.index)]
             costs = [float(c) for c in ms_plot["Cost_INR_tCO2"]]
-            colors_m = ['#597558' if c <= emcp else '#e11d48' for c in costs]
+            colors_m = ['#047857' if c <= emcp else '#e11d48' for c in costs]
             ax_macc_chart.bar(levers, costs, color=colors_m, edgecolor='#334155')
             ax_macc_chart.axhline(emcp, color='#0284c7', linestyle='--', linewidth=1.5, label=f'Market MCP Threshold (₹{emcp:.0f})')
             ax_macc_chart.set_title("Ranked Internal Decarbonisation Levers vs Market Clearing Price", color='#142617', fontsize=9.2, fontweight='bold', pad=8)
@@ -1943,10 +1976,10 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         t4.auto_set_font_size(False); t4.set_fontsize(7.8); t4.scale(1.0, 1.45)
         for (r_i, c_i), cell in t4.get_celld().items():
             if r_i == 0:
-                cell.set_facecolor('#597558'); cell.set_text_props(color='#ffffff', weight='bold')
+                cell.set_facecolor('#047857'); cell.set_text_props(color='#ffffff', weight='bold')
             else:
-                cell.set_facecolor('#f4f7f4' if "Internal" in mac_rows[r_i][5] else '#ffffff')
-            cell.set_edgecolor('#cbd5e1')
+                cell.set_facecolor('#f0fdf4' if "Internal" in mac_rows[r_i][5] else '#ffffff')
+            cell.set_edgecolor('#d1fae5')
 
         pdf.savefig(fig5, facecolor='#ffffff')
         plt.close(fig5)
@@ -1960,7 +1993,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         ax_strat = fig6.add_axes([0.050, 0.530, 0.900, 0.295])
         ax_strat.set_facecolor('#f8fafc')
         ax_strat.axis('off')
-        ax_strat.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.0))
+        ax_strat.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f0fdf4', edgecolor='#d1fae5', linewidth=1.0))
         ax_strat.text(0.025, 0.91, "CARBON TREASURY & MONETIZATION PLAYBOOK", color='#142617', fontsize=9.2, fontweight='bold')
 
         ax_strat.text(0.025, 0.78, "1. Surplus Banking vs Exchange Monetization:", color='#142617', fontsize=8.0, fontweight='bold')
@@ -1971,7 +2004,7 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         t_auc = f"Place limit orders around ₹{p50_val:,.0f} during early sessions to avoid market-clearing volatility spikes toward the ₹{p90_val:,.0f} upper bound."
         ax_strat.text(0.025, 0.38, textwrap.fill(t_auc, width=86), color='#334155', fontsize=7.2, va='top')
 
-        ax_strat.text(0.025, 0.20, "3. Risk-Adjusted Cashflow Impact:", color='#597558', fontsize=8.0, fontweight='bold')
+        ax_strat.text(0.025, 0.20, "3. Risk-Adjusted Cashflow Impact:", color='#047857', fontsize=8.0, fontweight='bold')
         t_risk = "Active treasury execution achieves estimated net savings of 14–18% vs unhedged last-minute true-up purchases."
         ax_strat.text(0.025, 0.10, textwrap.fill(t_risk, width=86), color='#334155', fontsize=7.2, va='top')
 
@@ -1991,17 +2024,17 @@ def generate_commercial_advisory_pdf(company_name, active_plants, my_res, my_sum
         t_cbam.auto_set_font_size(False); t_cbam.set_fontsize(7.5); t_cbam.scale(1.0, 1.45)
         for (r_i, c_i), cell in t_cbam.get_celld().items():
             if r_i == 0:
-                cell.set_facecolor('#597558'); cell.set_text_props(color='#ffffff', weight='bold')
+                cell.set_facecolor('#047857'); cell.set_text_props(color='#ffffff', weight='bold')
             else:
-                cell.set_facecolor('#f8fafc' if r_i % 2 == 0 else '#ffffff')
-            cell.set_edgecolor('#cbd5e1')
+                cell.set_facecolor('#f0fdf4' if r_i % 2 == 0 else '#ffffff')
+            cell.set_edgecolor('#d1fae5')
 
         # Institutional Executive Sign-Off & Compliance Seal Box
         ax_seal = fig6.add_axes([0.050, 0.065, 0.900, 0.115])
-        ax_seal.set_facecolor('#f4f7f4')
+        ax_seal.set_facecolor('#f0fdf4')
         ax_seal.axis('off')
-        ax_seal.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f4f7f4', edgecolor='#8fa88b', linewidth=1.0))
-        ax_seal.text(0.025, 0.82, "STATUTORY EXECUTIVE BOARD SIGN-OFF & AUDIT CLEARANCE", color='#597558', fontsize=8.8, fontweight='bold')
+        ax_seal.add_patch(patches.Rectangle((0, 0), 1, 1, facecolor='#f0fdf4', edgecolor='#047857', linewidth=1.2))
+        ax_seal.text(0.025, 0.82, "STATUTORY EXECUTIVE BOARD SIGN-OFF & AUDIT CLEARANCE (VERIFIED BY CLIC)", color='#064e3b', fontsize=8.5, fontweight='bold')
 
         # 3 Sign-Off Columns
         ax_seal.text(0.025, 0.58, "CHIEF FINANCIAL OFFICER (CFO)", color='#142617', fontsize=7.2, fontweight='bold')
@@ -3468,7 +3501,7 @@ Automated institutional reporting engine that compiles all simulation outputs, M
         col_d1, col_d2 = st.columns([2, 1])
         with col_d1:
             st.download_button(
-                f"📥 Download {comp} CCTS Commercial Advisory Report (PDF)",
+                f"📥 Download {comp} CCTS Commercial Advisory Report (PDF) — CLIC Engine",
                 pdf_report_bytes,
                 f"{comp}_CCTS_Commercial_Advisory_Report.pdf",
                 "application/pdf",
@@ -3488,7 +3521,7 @@ Automated institutional reporting engine that compiles all simulation outputs, M
         st.markdown(
             f"""
             <div style="background-color: {'#161e2c' if is_dark_theme() else '#f0fdf4'}; border: 1.5px solid {'#2d3848' if is_dark_theme() else '#d1fae5'}; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px;">
-                <span style="font-weight: 700; color: #10b981; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Confidential Commercial Advisory Briefing</span><br>
+                <span style="font-weight: 700; color: #10b981; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Confidential Commercial Advisory Briefing • Powered by CLIC</span><br>
                 <span style="font-weight: 800; font-size: 22px; color: {'#ffffff' if is_dark_theme() else '#0f172a'};">{comp} — National CCTS Decarbonization & Compliance Strategy</span><br>
                 <span style="color: {'#cbd5e1' if is_dark_theme() else '#64748b'}; font-size: 13.5px;">Advisory Scope: {len(my_active_plants)} Regulated Installations • Compliance Cycle: 2026 • Reporting Date: November 2026</span>
             </div>
