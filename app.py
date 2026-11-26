@@ -227,14 +227,53 @@ def inject_theme_css():
             font-weight: 500 !important;
         }
 
-        /* 6. Sidebar: Crisp White with Subtle Pale Mint & Slate Divider */
+        /* 6. Sidebar: Sleek Grounding Obsidian Black (Matching Footer & Ticker) */
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
-            background-color: #f8fafc !important;
-            border-right: 1.5px solid #e2e8f0 !important;
+            background-color: #090d16 !important;
+            border-right: 1.5px solid #1e293b !important;
         }
-        [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label,
-        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-            color: #0f172a !important;
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
+            color: #ffffff !important;
+            font-weight: 800 !important;
+        }
+        [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
+            color: #e2e8f0 !important;
+            font-weight: 600 !important;
+        }
+        [data-testid="stSidebar"] .stCaption, [data-testid="stSidebar"] small {
+            color: #94a3b8 !important;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] > div {
+            background-color: #111827 !important;
+            border-color: #334155 !important;
+            color: #ffffff !important;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] span,
+        [data-testid="stSidebar"] [data-baseweb="select"] div,
+        [data-testid="stSidebar"] [data-baseweb="select"] input {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        [data-testid="stSidebar"] input {
+            background-color: #111827 !important;
+            border-color: #334155 !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        [data-testid="stSidebar"] div[data-testid="stExpander"] {
+            background-color: #111827 !important;
+            border: 1px solid #1e293b !important;
+        }
+        [data-testid="stSidebar"] div[data-testid="stExpander"] summary span {
+            color: #f8fafc !important;
+        }
+        [data-testid="stSidebar"] hr {
+            border-color: #1e293b !important;
+        }
+        [data-testid="stSidebar"] [data-testid="stSlider"] label,
+        [data-testid="stSidebar"] [data-testid="stSlider"] p,
+        [data-testid="stSidebar"] [data-testid="stSlider"] span {
+            color: #e2e8f0 !important;
         }
 
         /* 7. Tabs: Clean Forest Green Underline Indicator */
@@ -1111,53 +1150,112 @@ def render_climactio_header(subtitle: str = "Enterprise Carbon Market Architectu
         )
     st.divider()
 
-def render_company_header(comp_name: str):
+def render_company_header(comp_name: str, compliance_year: int = None):
+    if compliance_year is None:
+        compliance_year = st.session_state.get("admin_last_compliance_year") or st.session_state.get("compliance_year") or st.session_state.get("corp_compliance_yr") or 2026
     formatted_name = format_company_name(comp_name)
     logo_b64 = get_logo_base64()
-    dark = is_dark_theme()
-    c_title = "#ffffff" if dark else "#0f172a"
-    c_sub = "#cbd5e1" if dark else "#475569"
-    logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 40px; object-fit: contain; margin-right: 14px; vertical-align: middle;">' if logo_b64 else ''
-    st.markdown(
-        f"""<div style="display: flex; align-items: center; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid {'#1e293b' if dark else '#e2e8f0'};">
-{logo_tag}
-<div>
-<div style="font-size: 24px; font-weight: 800; color: {c_title}; line-height: 1.2;">🏢 {formatted_name} — Obligated Entity Compliance Suite</div>
-<div style="font-size: 13px; color: {c_sub}; margin-top: 3px;">CCTS Enterprise Compliance Portfolio • Designated Consumer Facilities</div>
-</div>
-</div>""",
-        unsafe_allow_html=True
-    )
+    logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 48px; object-fit: contain; margin-right: 16px; vertical-align: middle; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">' if logo_b64 else ''
+    
+    # Active Regulatory News Item
+    news_items = load_market_news()
+    active_news = [n for n in news_items if n.get("active", True)]
+    alert_badge_html = ""
+    if active_news:
+        first_alert = active_news[0]
+        alert_badge_html = f"""
+        <div style="margin-top: 16px; padding: 10px 16px; background: rgba(0, 0, 0, 0.35); border-left: 4px solid #10b981; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; backdrop-filter: blur(8px);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #ecfdf5;">
+                <span style="background: #10b981; color: #044e39; font-weight: 800; font-size: 10.5px; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px;">📢 REGULATORY ALERT</span>
+                <span style="font-weight: 700; color: #a7f3d0;">{first_alert.get('title', 'Regulatory Update')}:</span>
+                <span style="color: #f1f5f9; opacity: 0.95;">{first_alert.get('summary', '')[:120]}...</span>
+            </div>
+            <span style="font-size: 11px; color: #6ee7b7; font-weight: 700; background: rgba(16,185,129,0.18); padding: 2px 8px; border-radius: 12px; border: 1px solid rgba(16,185,129,0.35);">BEE Gazette</span>
+        </div>
+        """
+
+    hero_banner = f"""
+    <div style="
+        background: linear-gradient(135deg, #022c22 0%, #064e3b 28%, #065f46 55%, #0f172a 85%, #090d16 100%);
+        border: 1.5px solid rgba(16, 185, 129, 0.35);
+        border-radius: 16px;
+        padding: 24px 28px;
+        margin-bottom: 16px;
+        box-shadow: 0 8px 24px rgba(4, 78, 57, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+    ">
+        <!-- Ambient Wavy Textured Green SVG Overlay -->
+        <svg style="position: absolute; right: -20px; top: -10px; bottom: -10px; height: 120%; width: 55%; opacity: 0.16; pointer-events: none;" viewBox="0 0 500 200" preserveAspectRatio="none">
+            <path d="M0,80 C140,160 300,10 500,90 L500,200 L0,200 Z" fill="#10b981"></path>
+            <path d="M0,50 C180,0 260,150 500,40 L500,200 L0,200 Z" fill="#34d399"></path>
+        </svg>
+
+        <div style="position: relative; z-index: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
+                <div style="display: flex; align-items: center;">
+                    {logo_tag}
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <span style="font-size: 27px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">
+                                🏢 {formatted_name}
+                            </span>
+                            <span style="background: rgba(16, 185, 129, 0.22); border: 1px solid rgba(16, 185, 129, 0.5); color: #6ee7b7; font-size: 11px; font-weight: 800; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.5px;">
+                                OBLIGATED ENTITY
+                            </span>
+                        </div>
+                        <div style="font-size: 13.5px; color: #cbd5e1; margin-top: 4px; font-weight: 500;">
+                            CCTS Enterprise Compliance Portfolio • Designated Consumer Facilities
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div style="background: rgba(0,0,0,0.32); border: 1px solid rgba(255,255,255,0.12); padding: 7px 14px; border-radius: 10px; text-align: right;">
+                        <div style="font-size: 10.5px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Statutory Regime</div>
+                        <div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Intensity-Based (BEE)</div>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); padding: 7px 14px; border-radius: 10px; text-align: right;">
+                        <div style="font-size: 10.5px; color: #a7f3d0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Compliance Cycle</div>
+                        <div style="font-size: 13px; font-weight: 800; color: #ffffff;">FY {compliance_year} Active</div>
+                    </div>
+                </div>
+            </div>
+
+            {alert_badge_html}
+        </div>
+    </div>
+    """
+    st.markdown(hero_banner, unsafe_allow_html=True)
 
 
 def render_market_ticker_strip(comp_name: str = None, compliance_year: int = None):
     if compliance_year is None:
-        compliance_year = st.session_state.get("admin_last_compliance_year") or st.session_state.get("compliance_year") or 2026
-    dark = is_dark_theme()
-    bg = "#0d1522" if dark else "#f0fdf4"
-    border = "#1e293b" if dark else "#d1fae5"
-    txt_lbl = "#94a3b8" if dark else "#065f46"
-    txt_val = "#f8fafc" if dark else "#0f172a"
-    accent_green = "#10b981" if dark else "#047857"
+        compliance_year = st.session_state.get("admin_last_compliance_year") or st.session_state.get("compliance_year") or st.session_state.get("corp_compliance_yr") or 2026
+    # Grounding Obsidian Black ticker matching sidebar and footer
+    bg = "#090d16"
+    border = "#1e293b"
+    txt_lbl = "#94a3b8"
+    txt_val = "#f8fafc"
+    accent_green = "#10b981"
     
-    html = f"""<div style="background:{bg}; border: 1.5px solid {border}; border-radius: 10px; padding: 10px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
-<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-    <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; color: {accent_green}; letter-spacing: 0.5px;">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: {accent_green}; box-shadow: 0 0 6px {accent_green};"></span>
+    html = f"""<div style="background:{bg}; border: 1.5px solid {border}; border-radius: 12px; padding: 10px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.18);">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+    <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.45); padding: 4px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 800; color: {accent_green}; letter-spacing: 0.5px;">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: {accent_green}; box-shadow: 0 0 8px {accent_green};"></span>
         CCTS CYCLE {compliance_year} ACTIVE
     </span>
     <span style="color: {border};">|</span>
-    <span style="font-size: 12px; color: {txt_lbl}; font-weight: 600;">STATUTORY REGIME:</span>
-    <span style="font-size: 12.5px; font-weight: 800; color: {txt_val};">INTENSITY-BASED (BASELINE & CREDIT)</span>
+    <span style="font-size: 11.5px; color: {txt_lbl}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">STATUTORY REGIME:</span>
+    <span style="font-size: 12.5px; font-weight: 800; color: #a7f3d0;">INTENSITY-BASED (BASELINE & CREDIT)</span>
 </div>
-<div style="display: flex; align-items: center; gap: 18px; font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace; font-size: 12px; flex-wrap: wrap;">
+<div style="display: flex; align-items: center; gap: 20px; font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace; font-size: 12px; flex-wrap: wrap;">
     <div><span style="color: {txt_lbl}; font-size: 11px;">PRICE BAND: </span><b style="color: {txt_val};">₹600 - ₹1,600</b></div>
     <div><span style="color: {txt_lbl}; font-size: 11px;">SETTLEMENT: </span><b style="color: #38bdf8;">T+2 UNIFORM DOUBLE AUCTION</b></div>
-    <div><span style="color: {txt_lbl}; font-size: 11px;">INTER-NETTING: </span><b style="color: #f43f5e; background: rgba(244,63,94,0.12); padding: 2px 6px; border-radius: 4px;">PROHIBITED (BEE)</b></div>
+    <div><span style="color: {txt_lbl}; font-size: 11px;">INTER-NETTING: </span><b style="color: #f43f5e; background: rgba(244,63,94,0.14); padding: 2px 7px; border-radius: 4px; font-weight: 700;">PROHIBITED (BEE)</b></div>
 </div>
 </div>"""
     st.markdown(html, unsafe_allow_html=True)
-
 
 def render_sidebar_branding():
     if os.path.exists(LOGO_PATH):
@@ -2137,10 +2235,10 @@ if _ss("role") == "corp":
         for key in list(st.session_state.keys()): del st.session_state[key]
         st.rerun()
 
-    # Render Announcement Bar at the Top
-    render_news_banner()
-    render_company_header(comp)
-    render_market_ticker_strip(comp_name=comp)
+    # Render Wavy Textured Green Hero Banner & Grounded Black Ticker
+    compliance_yr_curr = st.session_state.get("corp_compliance_yr", 2026)
+    render_company_header(comp, compliance_year=compliance_yr_curr)
+    render_market_ticker_strip(comp_name=comp, compliance_year=compliance_yr_curr)
 
     from engine.data_pipeline import load_main_sheet_from_excel, add_sector_column, apply_sidebar_adjustments
     from engine.macc_cbam import load_macc, get_sector_emissions_mtco2, compute_plant_macc_table, get_marginal_abatement_cap, compute_cbam_liability
@@ -2169,7 +2267,6 @@ if _ss("role") == "corp":
     macc_ov = st.session_state["corp_macc_overrides"]
     auction_bid_ov = st.session_state["corp_auction_overrides"]
 
-    st.caption(f"Entity Portfolio: **{comp}** • **{len(my_indices)} Regulated Installations** • CCTS National Market Coverage • Interactive Scenario & What-If Studio")
 
     # --- Sidebar Controls ---
     st.sidebar.header("⚙️ Macro Policy & Market Levers")
@@ -2217,14 +2314,21 @@ if _ss("role") == "corp":
     )
 
     st.sidebar.divider()
-    st.sidebar.subheader(f"📍 Quick-Tweak Plant Inputs ({compliance_yr})")
     is_future_yr = (compliance_yr > 2026)
+    with st.sidebar.expander(f"🏭 Quick-Tweak Plant Inputs ({len(my_indices)} facilities)", expanded=False):
+        plant_options = {i: f"{all_plants.loc[i].get('Plant', f'Plant {i}')[:32]} ({all_plants.loc[i].get('Reg_Number', '')})" for i in my_indices}
+        chosen_idx = st.selectbox(
+            "Select Installation to Tweak",
+            options=my_indices,
+            format_func=lambda i: plant_options[i],
+            key=f"sb_chosen_plant_{compliance_yr}",
+            help="Choose an installation to tweak its operational output or emissions intensity."
+        )
 
-    for idx in my_indices:
+        idx = chosen_idx
         plant_row = all_plants.loc[idx]
         reg_id = str(plant_row.get("Reg_Number", f"Reg_{idx}"))
         plant_name = str(plant_row.get("Plant", reg_id))
-        short_name = (plant_name[:40] + "…") if len(plant_name) > 40 else plant_name
 
         if is_future_yr and reg_id not in user_ov:
             cur_bgei = 0.0
@@ -2257,26 +2361,25 @@ if _ss("role") == "corp":
             if "Base_Production" in user_ov[reg_id]:
                 st.session_state[k_bprod] = float(user_ov[reg_id]["Base_Production"])
 
-        with st.sidebar.expander(f"🏭 {short_name}"):
-            st.caption(f"Reg ID: **{reg_id}**")
-            sb_aprod = st.number_input(f"Achieved Output {compliance_yr} (t)", value=cur_aprod, step=1.0, min_value=0.0, key=k_aprod, format="%.0f", help="Plant annual production output in tonnes")
-            sb_agei = st.number_input(f"Achieved Intensity {compliance_yr} (GEI)", value=cur_agei, step=0.0001, min_value=0.0, key=k_agei, format="%.4f", help="Achieved GHG emissions intensity (tCO2/t)")
-            sb_tgei = st.number_input(f"Target Intensity {compliance_yr} (GEI)", value=cur_tgei, step=0.0001, min_value=0.0, key=k_tgei, format="%.4f", help="Statutory compliance target GHG intensity")
-            sb_bgei = st.number_input(f"Baseline Intensity (Fixed) (GEI)", value=cur_bgei, step=0.0001, min_value=0.0, key=k_bgei, format="%.4f", help="Historical audited baseline GHG intensity (Fixed by Bureau of Energy Efficiency).", disabled=True)
-            sb_bprod = st.number_input(f"Baseline Output (Fixed) (t)", value=cur_bprod, step=1.0, min_value=0.0, key=k_bprod, format="%.0f", help="Historical audited baseline output in tonnes (Fixed by Bureau of Energy Efficiency).", disabled=True)
+        st.caption(f"Reg ID: **{reg_id}** • {plant_name}")
+        sb_aprod = st.number_input(f"Achieved Output {compliance_yr} (t)", value=cur_aprod, step=1.0, min_value=0.0, key=k_aprod, format="%.0f", help="Plant annual production output in tonnes")
+        sb_agei = st.number_input(f"Achieved Intensity {compliance_yr} (GEI)", value=cur_agei, step=0.0001, min_value=0.0, key=k_agei, format="%.4f", help="Achieved GHG emissions intensity (tCO2/t)")
+        sb_tgei = st.number_input(f"Target Intensity {compliance_yr} (GEI)", value=cur_tgei, step=0.0001, min_value=0.0, key=k_tgei, format="%.4f", help="Statutory compliance target GHG intensity")
+        sb_bgei = st.number_input(f"Baseline Intensity (Fixed) (GEI)", value=cur_bgei, step=0.0001, min_value=0.0, key=k_bgei, format="%.4f", help="Historical audited baseline GHG intensity (Fixed by Bureau of Energy Efficiency).", disabled=True)
+        sb_bprod = st.number_input(f"Baseline Output (Fixed) (t)", value=cur_bprod, step=1.0, min_value=0.0, key=k_bprod, format="%.0f", help="Historical audited baseline output in tonnes (Fixed by Bureau of Energy Efficiency).", disabled=True)
 
-            if reg_id not in user_ov: user_ov[reg_id] = {}
-            user_ov[reg_id]["Actual_Production"] = sb_aprod
-            user_ov[reg_id]["Mode_GEI"] = sb_agei
-            user_ov[reg_id]["Min_GEI"] = sb_agei * 0.98 if sb_agei > 0 else 0.0
-            user_ov[reg_id]["Max_GEI"] = sb_agei * 1.02 if sb_agei > 0 else 0.0
-            user_ov[reg_id]["Target_GEI"] = sb_tgei
-            user_ov[reg_id]["Baseline_GEI"] = sb_bgei
-            user_ov[reg_id]["Base_Production"] = sb_bprod
+        if reg_id not in user_ov: user_ov[reg_id] = {}
+        user_ov[reg_id]["Actual_Production"] = sb_aprod
+        user_ov[reg_id]["Mode_GEI"] = sb_agei
+        user_ov[reg_id]["Min_GEI"] = sb_agei * 0.98 if sb_agei > 0 else 0.0
+        user_ov[reg_id]["Max_GEI"] = sb_agei * 1.02 if sb_agei > 0 else 0.0
+        user_ov[reg_id]["Target_GEI"] = sb_tgei
+        user_ov[reg_id]["Baseline_GEI"] = sb_bgei
+        user_ov[reg_id]["Base_Production"] = sb_bprod
 
-    if st.sidebar.button(f"🔄 Reset {compliance_yr} Inputs to Master", type="secondary", key="reset_all_ov"):
-        st.session_state[ov_storage_key] = {}
-        st.rerun()
+        if st.sidebar.button(f"🔄 Reset {compliance_yr} Inputs to Master", type="secondary", key="reset_all_ov"):
+            st.session_state[ov_storage_key] = {}
+            st.rerun()
 
     sim_market_df = all_plants.copy()
     blank_cols_corp = ["Baseline_GEI", "Target_GEI", "Base_Production", "Actual_Production", "Min_GEI", "Mode_GEI", "Max_GEI"]
@@ -2439,35 +2542,36 @@ if _ss("role") == "corp":
     # Tab 1: Editable Installations
     with tab_overview:
         st.markdown(f"### Portfolio Asset Registry — {comp} (Compliance Year: {compliance_yr}) {qmark('Official facility register of all designated consumer installations belonging to this company. Baseline GEI and Baseline Production are statutory audited values fixed by BEE. Target GEI and Actual Production feed stochastic compliance simulations.')}", unsafe_allow_html=True)
-        st.info("✏️ **Double-click any cell below to enter your actual installation data.** Edits instantly feed into Simulation 1 (Demand & Supply).")
-
-        if compliance_yr > 2026:
-            st.warning(f"📅 **Future Compliance Year {compliance_yr} Active**: Inputs for {compliance_yr} are currently open for custom statutory intake. Enter your plant targets below, or auto-project using draft BEE tightening CAGR.")
-            btn_col1, btn_col2 = st.columns([1.5, 3])
-            with btn_col1:
-                if st.button(f"✨ Auto-Project {compliance_yr} Trajectory (from 2026)", key=f"btn_proj_tab1_{compliance_yr}", type="secondary"):
-                    dt = compliance_yr - 2026
-                    for idx in my_indices:
-                        p_row = all_plants.loc[idx]
-                        r_id = str(p_row.get("Reg_Number", f"Reg_{idx}"))
-                        t_gei_base = float(p_row["Target_GEI"])
-                        b_prod_base = float(p_row["Base_Production"])
-                        proj_tgei = round(t_gei_base * ((1.0 - 0.02) ** dt), 4)
-                        proj_prod = round(b_prod_base * ((1.0 + 0.04) ** dt), 0)
-                        if r_id not in user_ov: user_ov[r_id] = {}
-                        user_ov[r_id]["Target_GEI"] = proj_tgei
-                        user_ov[r_id]["Baseline_GEI"] = float(p_row["Baseline_GEI"])
-                        user_ov[r_id]["Actual_Production"] = proj_prod
-                        user_ov[r_id]["Base_Production"] = b_prod_base
-                        user_ov[r_id]["Mode_GEI"] = proj_tgei
-                        user_ov[r_id]["Min_GEI"] = proj_tgei * 0.98
-                        user_ov[r_id]["Max_GEI"] = proj_tgei * 1.02
-                    st.session_state[ov_storage_key] = user_ov
-                    st.rerun()
-            with btn_col2:
-                if st.button(f"🧹 Clear Year {compliance_yr} to Blank", key=f"btn_clear_tab1_{compliance_yr}"):
-                    st.session_state[ov_storage_key] = {}
-                    st.rerun()
+        
+        with st.expander("💡 Live Grid Guidance & Multi-Year Projection Engine", expanded=False):
+            st.markdown("✏️ **Live Grid Editing:** Double-click any cell in the table below to enter your actual installation data. Edits instantly feed into Simulation 1 (Demand & Supply).")
+            if compliance_yr > 2026:
+                st.write(f"📅 **Future Compliance Year {compliance_yr} Active**: Inputs for {compliance_yr} are currently open for custom statutory intake. Enter your plant targets below, or auto-project using draft BEE tightening CAGR.")
+                btn_col1, btn_col2 = st.columns([1.5, 3])
+                with btn_col1:
+                    if st.button(f"✨ Auto-Project {compliance_yr} Trajectory (from 2026)", key=f"btn_proj_tab1_{compliance_yr}", type="secondary"):
+                        dt = compliance_yr - 2026
+                        for idx in my_indices:
+                            p_row = all_plants.loc[idx]
+                            r_id = str(p_row.get("Reg_Number", f"Reg_{idx}"))
+                            t_gei_base = float(p_row["Target_GEI"])
+                            b_prod_base = float(p_row["Base_Production"])
+                            proj_tgei = round(t_gei_base * ((1.0 - 0.02) ** dt), 4)
+                            proj_prod = round(b_prod_base * ((1.0 + 0.04) ** dt), 0)
+                            if r_id not in user_ov: user_ov[r_id] = {}
+                            user_ov[r_id]["Target_GEI"] = proj_tgei
+                            user_ov[r_id]["Baseline_GEI"] = float(p_row["Baseline_GEI"])
+                            user_ov[r_id]["Actual_Production"] = proj_prod
+                            user_ov[r_id]["Base_Production"] = b_prod_base
+                            user_ov[r_id]["Mode_GEI"] = proj_tgei
+                            user_ov[r_id]["Min_GEI"] = proj_tgei * 0.98
+                            user_ov[r_id]["Max_GEI"] = proj_tgei * 1.02
+                        st.session_state[ov_storage_key] = user_ov
+                        st.rerun()
+                with btn_col2:
+                    if st.button(f"🧹 Clear Year {compliance_yr} to Blank", key=f"btn_clear_tab1_{compliance_yr}"):
+                        st.session_state[ov_storage_key] = {}
+                        st.rerun()
 
         tot_bprod = float(my_active_plants["Base_Production"].fillna(0).sum())
         tot_aprod = float(my_active_plants["Actual_Production"].fillna(0).sum())
