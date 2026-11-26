@@ -112,10 +112,16 @@ def inject_theme_css():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-        /* 1. Base Canvas - Pure Crisp White */
+        /* 1. Base Canvas - Executive Luminous Off-White with Subtle Mint & Sage Ambient Glow */
         html, body, [data-testid="stAppViewContainer"], .stApp {
             min-height: 100vh !important;
-            background-color: #ffffff !important;
+            background-color: #fbfdfc !important;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.055) 0px, transparent 40%),
+                radial-gradient(at 100% 0%, rgba(5, 150, 105, 0.04) 0px, transparent 45%),
+                radial-gradient(at 50% 50%, rgba(240, 253, 244, 0.45) 0px, transparent 60%),
+                linear-gradient(180deg, #ffffff 0%, #f7fbf9 50%, #f2f7f4 100%) !important;
+            background-attachment: fixed !important;
             color: #0f172a !important;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         }
