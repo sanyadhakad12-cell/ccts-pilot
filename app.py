@@ -1156,23 +1156,6 @@ def render_company_header(comp_name: str, compliance_year: int = None):
     formatted_name = format_company_name(comp_name)
     logo_b64 = get_logo_base64()
     logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 48px; object-fit: contain; margin-right: 16px; vertical-align: middle; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">' if logo_b64 else ''
-    
-    # Active Regulatory News Item
-    news_items = load_market_news()
-    active_news = [n for n in news_items if n.get("active", True)]
-    alert_badge_html = ""
-    if active_news:
-        first_alert = active_news[0]
-        alert_badge_html = f"""
-        <div style="margin-top: 16px; padding: 10px 16px; background: rgba(0, 0, 0, 0.35); border-left: 4px solid #10b981; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; backdrop-filter: blur(8px);">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #ecfdf5;">
-                <span style="background: #10b981; color: #044e39; font-weight: 800; font-size: 10.5px; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px;">📢 REGULATORY ALERT</span>
-                <span style="font-weight: 700; color: #a7f3d0;">{first_alert.get('title', 'Regulatory Update')}:</span>
-                <span style="color: #f1f5f9; opacity: 0.95;">{first_alert.get('summary', '')[:120]}...</span>
-            </div>
-            <span style="font-size: 11px; color: #6ee7b7; font-weight: 700; background: rgba(16,185,129,0.18); padding: 2px 8px; border-radius: 12px; border: 1px solid rgba(16,185,129,0.35);">BEE Gazette</span>
-        </div>
-        """
 
     hero_banner = f"""
     <div style="
@@ -1221,13 +1204,10 @@ def render_company_header(comp_name: str, compliance_year: int = None):
                     </div>
                 </div>
             </div>
-
-            {alert_badge_html}
         </div>
     </div>
     """
     st.markdown(hero_banner, unsafe_allow_html=True)
-
 
 def render_market_ticker_strip(comp_name: str = None, compliance_year: int = None):
     if compliance_year is None:
@@ -2235,7 +2215,10 @@ if _ss("role") == "corp":
         for key in list(st.session_state.keys()): del st.session_state[key]
         st.rerun()
 
-    # Render Wavy Textured Green Hero Banner & Grounded Black Ticker
+    # Dedicated Regulatory Box (Remains Prominently as Requested)
+    render_news_banner()
+
+    # Executive Wavy Textured Green Hero Banner & Grounded Black Ticker
     compliance_yr_curr = st.session_state.get("corp_compliance_yr", 2026)
     render_company_header(comp, compliance_year=compliance_yr_curr)
     render_market_ticker_strip(comp_name=comp, compliance_year=compliance_yr_curr)
