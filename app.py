@@ -92,10 +92,10 @@ st.set_page_config(
 )
 
 if "theme_mode" not in st.session_state:
-    st.session_state["theme_mode"] = "☀️ Light Theme"
+    st.session_state["theme_mode"] = "☀️ Nordic Clean Eco (Palette 2)"
 
 def get_current_theme():
-    return st.session_state.get("theme_mode", "☀️ Light Theme")
+    return st.session_state.get("theme_mode", "☀️ Nordic Clean Eco (Palette 2)")
 
 def is_dark_theme():
     return "Dark" in get_current_theme()
@@ -105,34 +105,60 @@ def get_plotly_template():
 
 def inject_theme_css():
     if not is_dark_theme():
-        # Crisp White Modern Light Theme
+        # =========================================================================
+        # PALETTE 2: THE NORDIC CLEAN ECO (Crisp White + Jet Black + Forest Green)
+        # =========================================================================
         css = """
         <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
+        /* 1. Base Canvas - Pure Crisp White */
         html, body, [data-testid="stAppViewContainer"], .stApp {
             min-height: 100vh !important;
             background-color: #ffffff !important;
             color: #0f172a !important;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         }
+
+        /* 2. Numerical Monospace Font */
         [data-testid="stMetricValue"], [data-testid="stMetricValue"] div,
         .tabular-numbers, [data-testid="stDataFrame"] {
             font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace !important;
             font-variant-numeric: tabular-nums !important;
         }
+
+        /* 3. Bento Metric Cards (White to Pale Mint subtle gradient, Light Emerald border, Jet-Black Value) */
         [data-testid="stMetric"] {
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
-            border: 1.5px solid #e2e8f0 !important;
-            border-radius: 10px !important;
-            padding: 14px 16px !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-            transition: all 0.2s ease !important;
+            background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%) !important;
+            border: 1.5px solid #d1fae5 !important;
+            border-radius: 12px !important;
+            padding: 14px 18px !important;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+            transition: all 0.22s ease-in-out !important;
         }
         [data-testid="stMetric"]:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important;
+            transform: translateY(-2px);
+            border-color: #10b981 !important;
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
         }
+        [data-testid="stMetricValue"], [data-testid="stMetricValue"] div {
+            color: #0f172a !important;
+            font-weight: 800 !important;
+            font-size: 26px !important;
+            letter-spacing: -0.5px !important;
+        }
+        [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] p {
+            color: #334155 !important;
+            font-weight: 700 !important;
+            font-size: 12.5px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+        [data-testid="stMetricDelta"], [data-testid="stMetricDelta"] div, [data-testid="stMetricDelta"] svg {
+            font-weight: 700 !important;
+        }
+
+        /* 4. Layout & Sticky Grounded Footer Structure */
         .main {
             display: flex !important;
             flex-direction: column !important;
@@ -162,7 +188,7 @@ def inject_theme_css():
             margin-left: -5rem !important;
             margin-right: -5rem !important;
             margin-bottom: -5rem !important;
-            padding: 40px 5rem 36px 5rem !important;
+            padding: 42px 5rem 38px 5rem !important;
             border-radius: 0px !important;
         }
         @media (max-width: 768px) {
@@ -174,67 +200,68 @@ def inject_theme_css():
                 padding: 30px 1.5rem 24px 1.5rem !important;
             }
         }
-        div[data-testid="stMarkdownContainer"] > p, div[data-testid="stMarkdownContainer"] > span {
+
+        /* 5. Typography: 100% WCAG AAA Contrast (Jet-Black Headers & Rich Charcoal Text) */
+        div[data-testid="stMarkdownContainer"] > p,
+        div[data-testid="stMarkdownContainer"] > span,
+        div[data-testid="stMarkdownContainer"] > li,
+        .stApp p, .stApp span, .stApp div {
             color: #0f172a;
         }
         h1, h2, h3, h4, h5, h6 {
-            color: #0f172a;
-            font-weight: 800;
-            letter-spacing: -0.3px;
+            color: #0f172a !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.4px !important;
+        }
+        strong, b {
+            color: #000000 !important;
+            font-weight: 800 !important;
         }
         [data-testid="stWidgetLabel"] label, [data-testid="stWidgetLabel"] p,
         [data-baseweb="radio"] span, [data-baseweb="checkbox"] span {
             color: #0f172a !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
         }
         .stCaption, [data-testid="stCaptionContainer"], small {
             color: #475569 !important;
+            font-weight: 500 !important;
         }
+
+        /* 6. Sidebar: Crisp White with Subtle Pale Mint & Slate Divider */
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
             background-color: #f8fafc !important;
-            border-right: 1px solid #e2e8f0 !important;
+            border-right: 1.5px solid #e2e8f0 !important;
         }
         [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label,
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
             color: #0f172a !important;
         }
+
+        /* 7. Tabs: Clean Forest Green Underline Indicator */
         .stTabs [data-baseweb="tab"] {
             color: #475569 !important;
             font-weight: 600 !important;
             font-size: 14px !important;
-            padding: 8px 16px !important;
+            padding: 10px 18px !important;
+            border-bottom: 2px solid transparent !important;
+            transition: all 0.2s ease !important;
         }
         .stTabs [data-baseweb="tab"] p {
             color: #475569 !important;
         }
         .stTabs [aria-selected="true"] p, .stTabs [aria-selected="true"] {
-            color: #059669 !important;
+            color: #047857 !important;
             font-weight: 800 !important;
-            border-bottom: 2px solid #059669 !important;
+            border-bottom: 3px solid #047857 !important;
         }
-        [data-testid="stMetric"] {
-            background-color: #f8fafc !important;
-            border: 1px solid #e2e8f0 !important;
-            border-radius: 10px !important;
-            padding: 12px 14px !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        }
-        [data-testid="stMetricValue"], [data-testid="stMetricValue"] div {
-            color: #0f172a !important;
-            font-weight: 800 !important;
-            font-size: 26px !important;
-        }
-        [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] p {
-            color: #475569 !important;
-            font-weight: 600 !important;
-            font-size: 13px !important;
-        }
+
+        /* 8. Buttons: Combining Forest Green CTA + High-End Jet Black Secondary Outlines */
         button[kind="primary"], button[data-testid="baseButton-primary"] {
-            background-color: #059669 !important;
-            border: none !important;
+            background-color: #047857 !important;
+            border: 1px solid #047857 !important;
             border-radius: 8px !important;
-            padding: 8px 16px !important;
-            box-shadow: 0 2px 4px rgba(5,150,105,0.25) !important;
+            padding: 9px 20px !important;
+            box-shadow: 0 2px 5px rgba(4,120,87,0.25) !important;
             transition: all 0.2s ease !important;
         }
         button[kind="primary"] p, button[kind="primary"] span, button[data-testid="baseButton-primary"] p, button[data-testid="baseButton-primary"] span {
@@ -242,72 +269,130 @@ def inject_theme_css():
             font-weight: 700 !important;
         }
         button[kind="primary"]:hover, button[data-testid="baseButton-primary"]:hover {
-            background-color: #047857 !important;
+            background-color: #064e3b !important;
+            border-color: #064e3b !important;
             transform: translateY(-1px) !important;
-            box-shadow: 0 4px 8px rgba(5,150,105,0.35) !important;
+            box-shadow: 0 4px 10px rgba(4,120,87,0.35) !important;
         }
         button[kind="secondary"], button[data-testid="baseButton-secondary"] {
-            background-color: #f1f5f9 !important;
-            border: 1px solid #cbd5e1 !important;
+            background-color: #ffffff !important;
+            border: 1.5px solid #0f172a !important;
             border-radius: 8px !important;
-            padding: 8px 16px !important;
+            padding: 9px 20px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
             transition: all 0.2s ease !important;
         }
         button[kind="secondary"] p, button[kind="secondary"] span, button[data-testid="baseButton-secondary"] p, button[data-testid="baseButton-secondary"] span {
             color: #0f172a !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
         }
         button[kind="secondary"]:hover, button[data-testid="baseButton-secondary"]:hover {
-            background-color: #e2e8f0 !important;
+            background-color: #f0fdf4 !important;
+            border-color: #047857 !important;
+            color: #047857 !important;
             transform: translateY(-1px) !important;
         }
+        button[kind="secondary"]:hover p, button[kind="secondary"]:hover span {
+            color: #047857 !important;
+        }
         .stDownloadButton > button {
-            background-color: #0284c7 !important;
-            border: none !important;
+            background-color: #0f172a !important;
+            border: 1.5px solid #0f172a !important;
             border-radius: 8px !important;
-            box-shadow: 0 2px 4px rgba(2,132,199,0.25) !important;
+            padding: 9px 20px !important;
+            box-shadow: 0 2px 4px rgba(15,23,42,0.15) !important;
+            transition: all 0.2s ease !important;
         }
         .stDownloadButton > button p, .stDownloadButton > button span {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
         .stDownloadButton > button:hover {
-            background-color: #0369a1 !important;
+            background-color: #047857 !important;
+            border-color: #047857 !important;
+            transform: translateY(-1px) !important;
         }
-        .auth-panel {border:1px solid #e0e0e0; border-radius:10px; padding:14px 18px; margin-bottom:16px; background:#fafafa;}
-        .auth-title {font-size:1.1rem; font-weight:700; margin-bottom:8px;}
-        .isolated-badge {background:#e7f3fe; border-left:4px solid #2196f3; padding:8px 12px; border-radius:6px; font-size:0.88rem; margin-bottom:12px;}
-        .admin-badge {background:#e8f5e9; border-left:4px solid #4caf50; padding:8px 12px; border-radius:6px; font-size:0.88rem; margin-bottom:12px;}
+
+        /* 9. Input Fields, Dropdowns & Sliders (Crisp White with Forest Green Accent Focus) */
+        input, textarea, [data-baseweb="input"] input {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
+            border: 1.5px solid #cbd5e1 !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+        }
+        input:focus, textarea:focus, [data-baseweb="input"] input:focus {
+            border-color: #047857 !important;
+            box-shadow: 0 0 0 3px rgba(4,120,87,0.15) !important;
+        }
+        [data-baseweb="select"] > div {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 1.5px solid #cbd5e1 !important;
+            border-radius: 8px !important;
+        }
+        [data-baseweb="select"] span, [data-baseweb="select"] div, [data-baseweb="select"] input {
+            color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
+            font-weight: 600 !important;
+        }
+
+        /* 10. Data Tables & Data Editors */
+        [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
+            background-color: #ffffff !important;
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+        }
+
+        /* 11. Alerts, Expanders, & Banners */
+        .auth-panel {
+            border: 1.5px solid #d1fae5;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            background: #f0fdf4;
+        }
+        .auth-title {font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: #0f172a;}
+        .isolated-badge {background: #ecfdf5; border-left: 4px solid #047857; padding: 8px 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 12px; color: #064e3b;}
+        .admin-badge {background: #f0fdf4; border-left: 4px solid #10b981; padding: 8px 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 12px; color: #065f46;}
         .news-banner {
-            background-color: #ecfdf5 !important;
-            border-left: 5px solid #10b981 !important;
+            background: linear-gradient(90deg, #ecfdf5 0%, #f0fdf4 100%) !important;
+            border-left: 5px solid #047857 !important;
+            border: 1.5px solid #a7f3d0 !important;
             padding: 14px 18px !important;
             margin-bottom: 20px !important;
-            border-radius: 8px !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border-radius: 10px !important;
+            box-shadow: 0 1px 4px rgba(4,120,87,0.06);
         }
         .news-banner * {
             color: #0f172a !important;
         }
         .news-banner span:first-child {
-            color: #065f46 !important;
+            color: #047857 !important;
             font-weight: 800 !important;
         }
         .graph-desc-card {
-            background-color: #f8fafc !important;
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 8px !important;
-            padding: 14px 16px !important;
+            background-color: #f0fdf4 !important;
+            border: 1.5px solid #d1fae5 !important;
+            border-radius: 10px !important;
+            padding: 14px 18px !important;
             margin-top: 10px !important;
             margin-bottom: 18px !important;
             font-size: 13.5px !important;
-            color: #334155 !important;
+            color: #1e293b !important;
             line-height: 1.55 !important;
         }
         div[data-testid="stExpander"] {
-            border: 1px solid #e2e8f0 !important;
-            border-radius: 8px !important;
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
             background-color: #ffffff !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+        }
+        div[data-testid="stExpander"] summary span {
+            color: #0f172a !important;
+            font-weight: 700 !important;
         }
         </style>
         """
@@ -319,7 +404,7 @@ def inject_theme_css():
 
         html, body, [data-testid="stAppViewContainer"], .stApp {
             min-height: 100vh !important;
-            background-color: #0c1017 !important;
+            background-color: #0a0f1d !important;
             color: #f8fafc !important;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         }
@@ -329,17 +414,17 @@ def inject_theme_css():
             font-variant-numeric: tabular-nums !important;
         }
         [data-testid="stMetric"] {
-            background: linear-gradient(180deg, #131c2a 0%, #0d1522 100%) !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 10px !important;
-            padding: 14px 16px !important;
+            background: linear-gradient(180deg, #111827 0%, #0d1522 100%) !important;
+            border: 1.5px solid rgba(16, 185, 129, 0.25) !important;
+            border-radius: 12px !important;
+            padding: 14px 18px !important;
             box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
             transition: all 0.2s ease !important;
         }
         [data-testid="stMetric"]:hover {
-            transform: translateY(-1px);
-            border-color: rgba(56, 189, 248, 0.35) !important;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important;
+            transform: translateY(-2px);
+            border-color: #10b981 !important;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25) !important;
         }
         .main {
             display: flex !important;
@@ -370,7 +455,7 @@ def inject_theme_css():
             margin-left: -5rem !important;
             margin-right: -5rem !important;
             margin-bottom: -5rem !important;
-            padding: 40px 5rem 36px 5rem !important;
+            padding: 42px 5rem 38px 5rem !important;
             border-radius: 0px !important;
         }
         @media (max-width: 768px) {
@@ -413,8 +498,8 @@ def inject_theme_css():
         }
         /* Sidebar in Dark Theme */
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {
-            background-color: #111620 !important;
-            border-right: 1px solid #232b38 !important;
+            background-color: #0d131f !important;
+            border-right: 1.5px solid #1e293b !important;
         }
         [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label,
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
@@ -431,20 +516,20 @@ def inject_theme_css():
             color: #94a3b8 !important;
         }
         .stTabs [aria-selected="true"] p, .stTabs [aria-selected="true"] {
-            color: #34d399 !important;
+            color: #10b981 !important;
             font-weight: 800 !important;
-            border-bottom: 2px solid #34d399 !important;
+            border-bottom: 2px solid #10b981 !important;
         }
         /* Metric Cards in Dark Theme */
         [data-testid="stMetric"] {
-            background-color: #161e2c !important;
-            border: 1px solid #2d3848 !important;
-            border-radius: 10px !important;
+            background-color: #111827 !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 12px !important;
             padding: 12px 14px !important;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         [data-testid="stMetricValue"], [data-testid="stMetricValue"] div {
-            color: #38bdf8 !important;
+            color: #ffffff !important;
             font-weight: 800 !important;
             font-size: 26px !important;
         }
@@ -455,11 +540,11 @@ def inject_theme_css():
         }
         /* Primary Buttons */
         button[kind="primary"], button[data-testid="baseButton-primary"] {
-            background-color: #059669 !important;
+            background-color: #047857 !important;
             border: none !important;
             border-radius: 8px !important;
             padding: 8px 16px !important;
-            box-shadow: 0 2px 5px rgba(5,150,105,0.4) !important;
+            box-shadow: 0 2px 5px rgba(4,120,87,0.4) !important;
             transition: all 0.2s ease !important;
         }
         button[kind="primary"] p, button[kind="primary"] span, button[data-testid="baseButton-primary"] p, button[data-testid="baseButton-primary"] span {
@@ -467,7 +552,7 @@ def inject_theme_css():
             font-weight: 700 !important;
         }
         button[kind="primary"]:hover, button[data-testid="baseButton-primary"]:hover {
-            background-color: #047857 !important;
+            background-color: #064e3b !important;
             transform: translateY(-1px) !important;
         }
         /* Secondary Buttons */
@@ -489,31 +574,28 @@ def inject_theme_css():
         }
         /* Download Buttons */
         .stDownloadButton > button {
-            background-color: #0284c7 !important;
-            border: none !important;
+            background-color: #0f172a !important;
+            border: 1px solid #334155 !important;
             border-radius: 8px !important;
-            box-shadow: 0 2px 5px rgba(2,132,199,0.3) !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
         }
         .stDownloadButton > button p, .stDownloadButton > button span {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
         .stDownloadButton > button:hover {
-            background-color: #0369a1 !important;
+            background-color: #047857 !important;
         }
-        /* Captions and Subtext in Dark Theme - Enhanced contrast */
         .stCaption, [data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p, small {
             color: #cbd5e1 !important;
             font-weight: 500 !important;
         }
-        /* Inputs, Selectboxes, Dropdowns */
         input, textarea, [data-baseweb="input"] input {
-            background-color: #161e2c !important;
+            background-color: #111827 !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             border-color: #334155 !important;
         }
-        /* Disabled Inputs Visibility (WebKit / Chrome fix) */
         input:disabled, textarea:disabled, [data-baseweb="input"] input:disabled {
             background-color: #1a2332 !important;
             color: #e2e8f0 !important;
@@ -521,7 +603,7 @@ def inject_theme_css():
             opacity: 0.95 !important;
         }
         [data-baseweb="select"] > div {
-            background-color: #161e2c !important;
+            background-color: #111827 !important;
             color: #ffffff !important;
             border-color: #334155 !important;
         }
@@ -529,9 +611,8 @@ def inject_theme_css():
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
         }
-        /* Popovers, Menus and Module Guides */
         [data-baseweb="popover"], [data-baseweb="menu"], ul[role="listbox"], div[data-testid="stPopoverBody"] {
-            background-color: #111722 !important;
+            background-color: #0d131f !important;
             color: #ffffff !important;
             border: 1px solid #334155 !important;
         }
@@ -548,47 +629,35 @@ def inject_theme_css():
             font-weight: 700 !important;
         }
         ul[role="listbox"] li {
-            background-color: #161e2c !important;
+            background-color: #111827 !important;
             color: #ffffff !important;
         }
         ul[role="listbox"] li:hover {
-            background-color: #243042 !important;
+            background-color: #1e293b !important;
         }
-        /* Expander Headers & Container */
         div[data-testid="stExpander"] {
-            background-color: #111722 !important;
-            border: 1px solid #232b38 !important;
+            background-color: #0d131f !important;
+            border: 1px solid #1e293b !important;
             border-radius: 8px !important;
         }
         div[data-testid="stExpander"] summary span {
             color: #f8fafc !important;
             font-weight: 700 !important;
         }
-        /* Alerts, Notifications & Info Boxes in Dark Theme */
-        .stAlert,
-        [data-testid="stAlert"],
-        [data-testid="stAlert"] > div,
-        .stAlert > div,
-        [data-baseweb="notification"],
-        div[role="alert"],
-        div[data-testid="stAlertContent"] {
-            background-color: #132030 !important;
-            border: 1px solid #223750 !important;
+        .stAlert, [data-testid="stAlert"], [data-testid="stAlert"] > div,
+        .stAlert > div, [data-baseweb="notification"], div[role="alert"], div[data-testid="stAlertContent"] {
+            background-color: #111827 !important;
+            border: 1px solid #1e293b !important;
             border-radius: 8px !important;
         }
-        .stAlert *,
-        [data-testid="stAlert"] *,
-        [data-baseweb="notification"] *,
-        div[role="alert"] *,
-        div[data-testid="stAlertContent"] *,
-        div[data-testid="stAlertContent"] p,
-        div[data-testid="stAlertContent"] span {
+        .stAlert *, [data-testid="stAlert"] *, [data-baseweb="notification"] *,
+        div[role="alert"] *, div[data-testid="stAlertContent"] *,
+        div[data-testid="stAlertContent"] p, div[data-testid="stAlertContent"] span {
             color: #f8fafc !important;
         }
         [data-baseweb="notification"] svg {
-            fill: #38bdf8 !important;
+            fill: #10b981 !important;
         }
-        /* Number Input buttons (+/-) in Dark Theme */
         [data-testid="stNumberInput"] button {
             background-color: #1a2536 !important;
             color: #ffffff !important;
@@ -597,16 +666,13 @@ def inject_theme_css():
         [data-testid="stNumberInput"] button * {
             color: #ffffff !important;
         }
-        /* Slider labels and subtext in Dark Theme */
-        [data-testid="stSlider"] label,
-        [data-testid="stSlider"] p,
-        [data-testid="stSlider"] span,
-        [data-testid="stSlider"] div {
+        [data-testid="stSlider"] label, [data-testid="stSlider"] p,
+        [data-testid="stSlider"] span, [data-testid="stSlider"] div {
             color: #cbd5e1 !important;
         }
-        .auth-panel {border:1px solid #2d3848; border-radius:10px; padding:14px 18px; margin-bottom:16px; background:#161e2c;}
+        .auth-panel {border:1px solid #1e293b; border-radius:10px; padding:14px 18px; margin-bottom:16px; background:#111827;}
         .auth-title {font-size:1.1rem; font-weight:700; margin-bottom:8px; color:#ffffff;}
-        .isolated-badge {background:#14293f; border-left:4px solid #38bdf8; padding:8px 12px; border-radius:6px; font-size:0.88rem; margin-bottom:12px; color:#f1f5f9;}
+        .isolated-badge {background:#0f291e; border-left:4px solid #10b981; padding:8px 12px; border-radius:6px; font-size:0.88rem; margin-bottom:12px; color:#f1f5f9;}
         .admin-badge {background:#0c3629; border-left:4px solid #10b981; padding:8px 12px; border-radius:6px; font-size:0.88rem; margin-bottom:12px; color:#f1f5f9;}
         .news-banner {
             background-color: #0b3426 !important;
@@ -623,8 +689,8 @@ def inject_theme_css():
             font-weight: 800 !important;
         }
         .graph-desc-card {
-            background-color: #161e2c !important;
-            border: 1px solid #2d3848 !important;
+            background-color: #111827 !important;
+            border: 1px solid #1e293b !important;
             border-radius: 8px !important;
             padding: 14px 16px !important;
             margin-top: 10px !important;
@@ -636,9 +702,8 @@ def inject_theme_css():
         .graph-desc-card * {
             color: #e2e8f0 !important;
         }
-        /* Tables and Data Editors */
         [data-testid="stDataFrame"], [data-testid="stDataEditor"] {
-            background-color: #111722 !important;
+            background-color: #111827 !important;
             color: #f1f5f9 !important;
         }
         </style>
@@ -697,15 +762,16 @@ def format_company_name(name: str) -> str:
 
 def render_climactio_footer():
     dark = is_dark_theme()
-    bg_color = "#0b131e" if dark else "#f8fafc"
-    border_color = "#1e293b" if dark else "#e2e8f0"
-    title_color = "#ffffff" if dark else "#0f172a"
-    sub_color = "#94a3b8" if dark else "#475569"
-    icon_border = "#ffffff" if dark else "#0f172a"
-    icon_color = "#ffffff" if dark else "#0f172a"
-    contact_val_color = "#cbd5e1" if dark else "#0f172a"
-    email_color = "#38bdf8" if dark else "#059669"
-    addr_color = "#cbd5e1" if dark else "#334155"
+    # Palette 2: Grounding Jet Obsidian Footer anchored to Clean White Canvas
+    bg_color = "#090d16"
+    border_color = "#1e293b"
+    title_color = "#ffffff"
+    sub_color = "#94a3b8"
+    icon_border = "#334155"
+    icon_color = "#ffffff"
+    contact_val_color = "#e2e8f0"
+    email_color = "#10b981"
+    addr_color = "#cbd5e1"
     copy_color = "#64748b"
     logo_b64 = get_logo_base64()
     logo_img_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 34px; object-fit: contain; margin-right: 6px; vertical-align: middle;">' if logo_b64 else ''
@@ -1068,11 +1134,11 @@ def render_market_ticker_strip(comp_name: str = None, compliance_year: int = Non
     if compliance_year is None:
         compliance_year = st.session_state.get("admin_last_compliance_year") or st.session_state.get("compliance_year") or 2026
     dark = is_dark_theme()
-    bg = "#0d1522" if dark else "#f8fafc"
-    border = "#1e293b" if dark else "#e2e8f0"
-    txt_lbl = "#94a3b8" if dark else "#64748b"
+    bg = "#0d1522" if dark else "#f0fdf4"
+    border = "#1e293b" if dark else "#d1fae5"
+    txt_lbl = "#94a3b8" if dark else "#065f46"
     txt_val = "#f8fafc" if dark else "#0f172a"
-    accent_green = "#10b981"
+    accent_green = "#10b981" if dark else "#047857"
     
     html = f"""<div style="background:{bg}; border: 1.5px solid {border}; border-radius: 10px; padding: 10px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -1109,11 +1175,11 @@ def render_sidebar_branding():
     )
     theme_choice = st.sidebar.radio(
         "🎨 Interface Theme",
-        ["☀️ Light Theme", "🌙 Dark Theme"],
+        ["☀️ Nordic Clean Eco (Palette 2)", "🌙 High-Contrast Dark"],
         index=0 if not is_dark_theme() else 1,
         horizontal=True,
         key="app_theme_sidebar_toggle",
-        help="Switch between clean White/Light theme (default) and Institutional Dark theme (dark slate/black canvas with high-contrast text and dark charts)."
+        help="Palette 2: The Nordic Clean Eco (High-End Crisp White + Jet Black + Forest Green) and High-Contrast Dark."
     )
     if theme_choice != st.session_state.get("theme_mode"):
         st.session_state["theme_mode"] = theme_choice
@@ -1919,7 +1985,7 @@ if _ss("role") is None:
     portal_view = st.session_state.get("portal_selection_view", "menu")
     dark = is_dark_theme()
     card_bg = "#111622" if dark else "#ffffff"
-    card_border = "#1e293b" if dark else "#e2e8f0"
+    card_border = "#1e293b" if dark else "#d1fae5"
     txt_main = "#ffffff" if dark else "#0f172a"
     txt_sub = "#94a3b8" if dark else "#475569"
     logo_b64 = get_logo_base64()
@@ -3351,7 +3417,7 @@ Automated institutional reporting engine that compiles all simulation outputs, M
         # ==================== ON-SCREEN REPORT DISPLAY ====================
         st.markdown(
             f"""
-            <div style="background-color: {'#161e2c' if is_dark_theme() else '#f8fafc'}; border: 1px solid {'#2d3848' if is_dark_theme() else '#cbd5e1'}; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px;">
+            <div style="background-color: {'#161e2c' if is_dark_theme() else '#f0fdf4'}; border: 1.5px solid {'#2d3848' if is_dark_theme() else '#d1fae5'}; border-radius: 8px; padding: 18px 22px; margin-bottom: 24px;">
                 <span style="font-weight: 700; color: #10b981; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Confidential Commercial Advisory Briefing</span><br>
                 <span style="font-weight: 800; font-size: 22px; color: {'#ffffff' if is_dark_theme() else '#0f172a'};">{comp} — National CCTS Decarbonization & Compliance Strategy</span><br>
                 <span style="color: {'#cbd5e1' if is_dark_theme() else '#64748b'}; font-size: 13.5px;">Advisory Scope: {len(my_active_plants)} Regulated Installations • Compliance Cycle: 2026 • Reporting Date: November 2026</span>
