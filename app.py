@@ -1064,7 +1064,9 @@ def render_company_header(comp_name: str):
     )
 
 
-def render_market_ticker_strip(comp_name: str = None, compliance_year: int = 2026):
+def render_market_ticker_strip(comp_name: str = None, compliance_year: int = None):
+    if compliance_year is None:
+        compliance_year = st.session_state.get("admin_last_compliance_year") or st.session_state.get("compliance_year") or 2026
     dark = is_dark_theme()
     bg = "#0d1522" if dark else "#f8fafc"
     border = "#1e293b" if dark else "#e2e8f0"
@@ -2072,7 +2074,7 @@ if _ss("role") == "corp":
     # Render Announcement Bar at the Top
     render_news_banner()
     render_company_header(comp)
-    render_market_ticker_strip(comp_name=comp, compliance_year=compliance_yr)
+    render_market_ticker_strip(comp_name=comp)
 
     from engine.data_pipeline import load_main_sheet_from_excel, add_sector_column, apply_sidebar_adjustments
     from engine.macc_cbam import load_macc, get_sector_emissions_mtco2, compute_plant_macc_table, get_marginal_abatement_cap, compute_cbam_liability
@@ -4049,7 +4051,7 @@ if _ss("role") == "admin":
     )
 
     render_news_banner()
-    render_market_ticker_strip(compliance_year=compliance_year)
+    render_market_ticker_strip()
 
     # Model Controls Sidebar
     with st.sidebar:
