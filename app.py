@@ -1157,56 +1157,33 @@ def render_company_header(comp_name: str, compliance_year: int = None):
     logo_b64 = get_logo_base64()
     logo_tag = f'<img src="data:image/png;base64,{logo_b64}" style="height: 48px; object-fit: contain; margin-right: 16px; vertical-align: middle; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">' if logo_b64 else ''
 
-    hero_banner = f"""
-    <div style="
-        background: linear-gradient(135deg, #022c22 0%, #064e3b 28%, #065f46 55%, #0f172a 85%, #090d16 100%);
-        border: 1.5px solid rgba(16, 185, 129, 0.35);
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin-bottom: 16px;
-        box-shadow: 0 8px 24px rgba(4, 78, 57, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
-        position: relative;
-        overflow: hidden;
-    ">
-        <!-- Ambient Wavy Textured Green SVG Overlay -->
-        <svg style="position: absolute; right: -20px; top: -10px; bottom: -10px; height: 120%; width: 55%; opacity: 0.16; pointer-events: none;" viewBox="0 0 500 200" preserveAspectRatio="none">
-            <path d="M0,80 C140,160 300,10 500,90 L500,200 L0,200 Z" fill="#10b981"></path>
-            <path d="M0,50 C180,0 260,150 500,40 L500,200 L0,200 Z" fill="#34d399"></path>
-        </svg>
-
-        <div style="position: relative; z-index: 1;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
-                <div style="display: flex; align-items: center;">
-                    {logo_tag}
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                            <span style="font-size: 27px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">
-                                🏢 {formatted_name}
-                            </span>
-                            <span style="background: rgba(16, 185, 129, 0.22); border: 1px solid rgba(16, 185, 129, 0.5); color: #6ee7b7; font-size: 11px; font-weight: 800; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.5px;">
-                                OBLIGATED ENTITY
-                            </span>
-                        </div>
-                        <div style="font-size: 13.5px; color: #cbd5e1; margin-top: 4px; font-weight: 500;">
-                            CCTS Enterprise Compliance Portfolio • Designated Consumer Facilities
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                    <div style="background: rgba(0,0,0,0.32); border: 1px solid rgba(255,255,255,0.12); padding: 7px 14px; border-radius: 10px; text-align: right;">
-                        <div style="font-size: 10.5px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Statutory Regime</div>
-                        <div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Intensity-Based (BEE)</div>
-                    </div>
-                    <div style="background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); padding: 7px 14px; border-radius: 10px; text-align: right;">
-                        <div style="font-size: 10.5px; color: #a7f3d0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Compliance Cycle</div>
-                        <div style="font-size: 13px; font-weight: 800; color: #ffffff;">FY {compliance_year} Active</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    """
+    hero_banner = f"""<div style="background: linear-gradient(135deg, #022c22 0%, #064e3b 28%, #065f46 55%, #0f172a 85%, #090d16 100%); border: 1.5px solid rgba(16, 185, 129, 0.35); border-radius: 16px; padding: 24px 28px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(4, 78, 57, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08); position: relative; overflow: hidden;">
+<svg style="position: absolute; right: -20px; top: -10px; bottom: -10px; height: 120%; width: 55%; opacity: 0.16; pointer-events: none;" viewBox="0 0 500 200" preserveAspectRatio="none"><path d="M0,80 C140,160 300,10 500,90 L500,200 L0,200 Z" fill="#10b981"></path><path d="M0,50 C180,0 260,150 500,40 L500,200 L0,200 Z" fill="#34d399"></path></svg>
+<div style="position: relative; z-index: 1;">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
+<div style="display: flex; align-items: center;">
+{logo_tag}
+<div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+<span style="font-size: 27px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">🏢 {formatted_name}</span>
+<span style="background: rgba(16, 185, 129, 0.22); border: 1px solid rgba(16, 185, 129, 0.5); color: #6ee7b7; font-size: 11px; font-weight: 800; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.5px;">OBLIGATED ENTITY</span>
+</div>
+<div style="font-size: 13.5px; color: #cbd5e1; margin-top: 4px; font-weight: 500;">CCTS Enterprise Compliance Portfolio • Designated Consumer Facilities</div>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+<div style="background: rgba(0,0,0,0.32); border: 1px solid rgba(255,255,255,0.12); padding: 7px 14px; border-radius: 10px; text-align: right;">
+<div style="font-size: 10.5px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Statutory Regime</div>
+<div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Intensity-Based (BEE)</div>
+</div>
+<div style="background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); padding: 7px 14px; border-radius: 10px; text-align: right;">
+<div style="font-size: 10.5px; color: #a7f3d0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Compliance Cycle</div>
+<div style="font-size: 13px; font-weight: 800; color: #ffffff;">FY {compliance_year} Active</div>
+</div>
+</div>
+</div>
+</div>
+</div>"""
     st.markdown(hero_banner, unsafe_allow_html=True)
 
 def render_market_ticker_strip(comp_name: str = None, compliance_year: int = None):
