@@ -108,10 +108,30 @@ def inject_theme_css():
         # Crisp White Modern Light Theme
         css = """
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
         html, body, [data-testid="stAppViewContainer"], .stApp {
             min-height: 100vh !important;
             background-color: #ffffff !important;
             color: #0f172a !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
+        [data-testid="stMetricValue"], [data-testid="stMetricValue"] div,
+        .tabular-numbers, [data-testid="stDataFrame"] {
+            font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace !important;
+            font-variant-numeric: tabular-nums !important;
+        }
+        [data-testid="stMetric"] {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            padding: 14px 16px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+            transition: all 0.2s ease !important;
+        }
+        [data-testid="stMetric"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important;
         }
         .main {
             display: flex !important;
@@ -295,10 +315,31 @@ def inject_theme_css():
         # High-Contrast Institutional Dark Theme (Every single word perfectly visible)
         css = """
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
         html, body, [data-testid="stAppViewContainer"], .stApp {
             min-height: 100vh !important;
             background-color: #0c1017 !important;
             color: #f8fafc !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
+        [data-testid="stMetricValue"], [data-testid="stMetricValue"] div,
+        .tabular-numbers, [data-testid="stDataFrame"] {
+            font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace !important;
+            font-variant-numeric: tabular-nums !important;
+        }
+        [data-testid="stMetric"] {
+            background: linear-gradient(180deg, #131c2a 0%, #0d1522 100%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 10px !important;
+            padding: 14px 16px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+            transition: all 0.2s ease !important;
+        }
+        [data-testid="stMetric"]:hover {
+            transform: translateY(-1px);
+            border-color: rgba(56, 189, 248, 0.35) !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important;
         }
         .main {
             display: flex !important;
@@ -723,107 +764,144 @@ Bangalore – 560048
 def render_knowledge_base_faq(portal_type: str = "corporate"):
     st.markdown("""
     ### ❓ CLIC Knowledge Base & Comprehensive FAQs
-    **Climactio Intelligence for CCTS (CLIC)** • Operational, Economic, and Policy Guidance.
+    **Climactio Intelligence for CCTS (CLIC)** • Operational, Economic, and Statutory Guidance.
     """)
-    st.info("💡 **Interactive Search**: Use the search bar below or browse the categorized sections to understand every mathematical model, policy lever, bidding engine, and statutory rule in CLIC.")
+    st.info("💡 **Interactive Search**: Use the search bar below or browse categorized sections to explore the mathematical models, policy levers, bidding engines, and statutory CCTS rules.")
     
-    search_q = st.text_input("🔍 Search Knowledge Base / Enter any keyword (e.g. 'shock', 'banking', 'MACC', 'CBAM', 'baseline', 'Monte Carlo', 'penalty', 'end to end'):", key=f"faq_search_{portal_type}").strip().lower()
+    search_q = st.text_input("🔍 Search Knowledge Base / Enter keyword (e.g. 'intensity', 'cap and trade', 'inter-netting', 'shock', 'banking', 'MACC', 'CBAM', 'Monte Carlo', 'penalty'):", key=f"faq_search_{portal_type}").strip().lower()
 
     faqs = [
-        # Category 1: Governance & Framework
+        # Category 1: Statutory Regime & Architecture
         {
-            "cat": "🏛️ Core Framework & Governance",
-            "q": "What is CLIC and what is its official purpose?",
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "What is CLIC and what is its role in CCTS?",
             "a": """**CLIC** stands for **Climactio Intelligence for CCTS**, developed and operated by **Climactio Private Services Limited**.
-            It is Climactio's proprietary enterprise simulation, pricing, and compliance risk analytics platform designed for the Indian Carbon Credit Trading Scheme (CCTS). Developed by Climactio Private Services Limited, it enables corporate treasuries, sustainability directors, plant heads, and compliance officers to model 10,000-draw Monte Carlo compliance risks, execute merit-order double-auction price discovery, evaluate MACC decarbonization levers, and assess EU CBAM Article 9 export deductions."""
+            It is Climactio's proprietary enterprise simulation, pricing, and compliance risk analytics platform designed specifically for the Indian Carbon Credit Trading Scheme (CCTS). It enables corporate treasuries, sustainability directors, plant heads, and compliance officers to model 10,000-draw Monte Carlo compliance risks, execute merit-order double-auction price discovery, evaluate MACC decarbonization levers, and assess EU CBAM Article 9 export deductions."""
         },
         {
-            "cat": "🏛️ Core Framework & Governance",
-            "q": "What is the Carbon Credit Trading Scheme (CCTS)?",
-            "a": """The CCTS is India's national cap-and-trade carbon compliance market governed by the Ministry of Power, administered by the Bureau of Energy Efficiency (BEE), and regulated by the Central Electricity Regulatory Commission (CERC).
-            Under CCTS, designated industrial facilities across energy-intensive sectors are assigned mandatory annual Greenhouse Gas Emission Intensity (GEI) reduction targets."""
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "What is the Carbon Credit Trading Scheme (CCTS) and how does it differ fundamentally from Cap-and-Trade?",
+            "a": """The **Carbon Credit Trading Scheme (CCTS)** is India's national statutory carbon compliance market established under the **Energy Conservation (Amendment) Act 2022**, administered by the **Bureau of Energy Efficiency (BEE)**, and regulated by the **Central Electricity Regulatory Commission (CERC)**.
+
+**Crucially, CCTS is an INTENSITY-BASED (Baseline-and-Credit) scheme, NOT an absolute Cap-and-Trade system:**
+1. **No Absolute Cap on Industrial Output:** Traditional Cap-and-Trade systems (such as the EU ETS) enforce an aggregate national cap on gross emissions (MtCO₂e), meaning overall industrial production can be constrained. In contrast, CCTS regulates **Greenhouse Gas Emission Intensity (GEI)** per unit of equivalent product (measured in $\\text{tCO}_2\\text{e} / \\text{tonne of product}$).
+2. **Growth-Compatible Framework:** Indian industrial plants are free to expand their production capacity without penalty, provided their operational emissions intensity is at or below the prescribed statutory target.
+3. **Ex-Post Credit Issuance:** Carbon Credit Certificates (CCCs) are not distributed upfront as free tradeable allowances. Rather, they are generated and issued *ex-post* into BEE registry accounts after annual energy and production audits are verified by Accredited Carbon Verifiers (ACVs)."""
         },
         {
-            "cat": "🏛️ Core Framework & Governance",
-            "q": "Who are the Obligated Entities (OEs) and what sectors are covered?",
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "What is the Core Compliance Equation used to calculate CCC Surplus or Deficit?",
+            "a": """The statutory volume of Carbon Credit Certificates (CCCs) is governed by the official CCTS compliance equation:
+$$\\text{CCC} = (\\text{Target GEI} - \\text{Achieved GEI}) \\times \\text{Actual Production}$$
+- **Positive Balance (Achieved GEI < Target GEI):** The facility beats its efficiency benchmark and is issued **Surplus CCCs** (where $1\\text{ CCC} = 1\\text{ metric tonne of CO}_2\\text{e}$ abated) into its official BEE registry account, which can be monetized on power exchanges.
+- **Negative Balance (Achieved GEI > Target GEI):** The facility fails to meet its intensity benchmark, incurs a **Compliance Deficit**, and is legally mandated to purchase and surrender equivalent CCCs on accredited power exchanges."""
+        },
+        {
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "What is the Strict Statutory 'No Inter-Netting' Mandate under BEE Rules?",
+            "a": """Under Bureau of Energy Efficiency (BEE) statutory rules, **corporate inter-netting across separate designated consumer (DC) facilities is strictly PROHIBITED**.
+- Even within the same corporate conglomerate (e.g. ACC, UltraTech, JSW), each facility is assigned an independent statutory registration ID (`Reg_Number`) and is audited as a standalone legal entity.
+- A corporate group **cannot** use surplus credits generated by Plant A to cancel out the compliance deficit of Plant B internally.
+- Every shortfall installation must independently procure and surrender its required CCCs on the accredited power exchange (PXIL / IEX). CLIC models compliance strictly at the facility level to mirror this statutory requirement."""
+        },
+        {
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "Who are the Obligated Entities (OEs) and which industrial sectors are covered?",
             "a": """CLIC covers all **248 designated major industrial installations** across 4 hard-to-abate sectors:
-            - **Iron & Steel:** 137 facilities (blast furnaces, DRI sponge iron, electric arc furnaces).
-            - **Cement:** 82 facilities (integrated clinker and grinding units).
-            - **Pulp & Paper:** 19 facilities (wood, agro, and recycled fiber mills).
-            - **Chlor-Alkali:** 10 facilities (caustic soda and chlorine membrane cell units).
-            Together, these installations account for over 1,120 Million Tonnes of CO₂ equivalent (MtCO₂e), representing ~35% of India's aggregate industrial GHG footprint."""
+- **Iron & Steel:** 137 facilities (integrated blast furnaces, DRI sponge iron, electric arc furnaces).
+- **Cement:** 82 facilities (integrated clinkerization and grinding units).
+- **Pulp & Paper:** 19 facilities (wood, agro-residue, and recycled fiber mills).
+- **Chlor-Alkali:** 10 facilities (caustic soda and chlorine membrane cell units).
+Together, these installations account for over 1,120 Million Tonnes of CO₂ equivalent ($\\text{MtCO}_2\\text{e}$), representing ~35% of India's aggregate industrial GHG footprint."""
         },
         {
-            "cat": "🏛️ Core Framework & Governance",
-            "q": "What is a Carbon Credit Certificate (CCC)?",
-            "a": """A **Carbon Credit Certificate (CCC)** is the official tradable compliance instrument under CCTS.
-            - **Denomination:** **1 CCC = 1 metric tonne of CO₂ equivalent (1 tCO₂e)** saved beyond the statutory target.
-            - **Surplus Entities:** Plants achieving a GHG intensity lower than their target receive surplus CCCs issued directly into their BEE registry accounts.
-            - **Deficit Entities:** Plants exceeding their target incur a legal compliance shortfall and must purchase and surrender equivalent CCCs on accredited power exchanges (PXIL, IEX)."""
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "What are the Statutory Non-Compliance Penalties under Section 14A?",
+            "a": """Under Section 14A of the **Energy Conservation (Amendment) Act 2022**, facilities that fail to surrender required CCCs before the annual statutory verification deadline face severe penalties:
+- **Financial Penalty Multiplier:** Up to **2.0× the average Market Clearing Price (MCP)** of CCCs traded during the compliance year.
+- **Environmental Compensation Ceiling:** Up to **₹2,000 / tCO₂e** for unabated shortfall emissions.
+- **Continuing Default Fine:** Additional ongoing daily financial penalties until full compliance surrender is confirmed by the regulator."""
         },
         {
-            "cat": "🏛️ Core Framework & Governance",
-            "q": "Why are Baseline GEI, Baseline Output, Plant Name, and Registration ID fixed / locked?",
-            "a": """In both the Administration and Corporate portals, **Baseline GHG Emissions Intensity (GEI)**, **Baseline Output (tonnes)**, **Installation Name**, and **Registration ID** are permanently fixed and read-only.
-            **Statutory Rationale:** Baseline values are formal, third-party verified, and gazetted figures established during the official baseline compliance cycle by BEE and the Ministry of Power. An entity cannot alter historical baseline performance benchmarks arbitrarily during annual compliance trading cycles; only annual targets, operational production, and achieved intensities can fluctuate."""
+            "cat": "🏛️ CCTS Statutory Regime & Core Architecture",
+            "q": "Why are Baseline GEI, Base Production, and Registration ID locked / read-only?",
+            "a": """In both Client and Administrative portals, **Baseline GHG Emission Intensity (GEI)**, **Base Output (tonnes)**, and **Registration ID** are permanently fixed and read-only.
+**Statutory Rationale:** Baseline benchmarks represent formal, third-party audited figures gazetted by BEE and the Ministry of Power following formal baseline audits. An entity cannot alter historical baseline benchmarks arbitrarily during annual compliance trading cycles; only annual targets, operational production, and achieved intensities can fluctuate."""
         },
 
-        # Category 2: Policy & Macro Levers
+        # Category 2: Operational & Policy Levers
         {
             "cat": "⚙️ Operational & Macro Policy Levers",
             "q": "What is the Capacity Utilization Factor (CUF) Shock Factor (%) and how is it calculated?",
             "a": """Industrial operations fluctuate due to grid outages, coal calorific deficits, raw material shortages, or macroeconomic demand slowdowns. The **Sector CUF Shock (%)** slider simulates macro operational stress across the sector.
-            **Mathematical Formula:**
-            $$\\text{Operational Production} = \\text{Base Production} \\times \\left(1 + \\frac{\\text{CUF Shock \\%}}{100}\\right)$$
-            - **Negative CUF Shock (e.g. -10%):** Plant throughput falls by 10%. Lower aggregate throughput lowers total fuel combustion and absolute emissions, reducing gross deficit volume across shortfall plants while simultaneously reducing surplus credits earned by efficient plants.
-            - **Positive CUF Shock (e.g. +10%):** Higher industrial utilization increases aggregate emissions and drives up deficit demand for CCCs."""
+**Mathematical Formula:**
+$$\\text{Operational Production} = \\text{Base Production} \\times \\left(1 + \\frac{\\text{CUF Shock \\%}}{100}\\right)$$
+- **Negative CUF Shock (e.g. -10%):** Plant throughput falls by 10%. Lower aggregate throughput lowers total fuel combustion and absolute emissions, reducing gross deficit volume across shortfall plants while simultaneously reducing surplus credits earned by efficient plants.
+- **Positive CUF Shock (e.g. +10%):** Higher industrial utilization increases aggregate emissions and drives up deficit demand for CCCs."""
         },
         {
             "cat": "⚙️ Operational & Macro Policy Levers",
             "q": "What is Banking and Carry-Forward (%) and how does it impact market clearance?",
             "a": """Under CCTS regulations, surplus entities are not required to liquidate 100% of their earned credits immediately. Entities can choose to **bank** a statutory percentage (e.g. 10%–50%) for surrender in subsequent compliance cycles ($T+1$ or $T+2$) as a hedge against future tightening.
-            **Mathematical Impact in Simulation:**
-            $$\\text{Market Available Supply} = \\text{Gross Surplus Credits} \\times \\left(1 - \\frac{\\text{Banking Carry-Forward \\%}}{100}\\right)$$
-            **Market Dynamics:** When banking retention rises, circulating sell orders on the spot exchange decrease. This restricted liquidity tightens supply, shifting the merit-order intersection upward and driving up the Market Clearing Price (MCP)."""
+**Mathematical Impact in Simulation:**
+$$\\text{Market Available Supply} = \\text{Gross Surplus Credits} \\times \\left(1 - \\frac{\\text{Banking Carry-Forward \\%}}{100}\\right)$$
+**Market Dynamics:** When banking retention rises, circulating sell orders on the spot exchange decrease. This restricted liquidity tightens supply, shifting the merit-order intersection upward and driving up the Market Clearing Price (MCP)."""
         },
         {
             "cat": "⚙️ Operational & Macro Policy Levers",
-            "q": "What are Min GEI, Mode GEI, and Max GEI (Triangular Distribution)?",
+            "q": "What are Min GEI, Mode GEI, and Max GEI in the 10,000-Draw Monte Carlo PERT Model?",
             "a": """Real-world plant emissions fluctuate due to variable coal ash content, limestone quality, and operational stability. Rather than using an unrealistic single deterministic number, CLIC models facility intensity as a **Triangular Stochastic PERT Distribution**:
-            - **Min GEI:** Best-case operational scenario (optimal raw materials, 98%+ uptime).
-            - **Mode GEI:** Most likely / expected operating emissions intensity.
-            - **Max GEI:** Worst-case scenario (poor fuel grade, unplanned shutdowns, equipment degradation).
-            CLIC draws 10,000 independent samples per plant across these bounds to calculate true compliance probability and financial Value at Risk (VaR)."""
+- **Min GEI:** Best-case operational scenario (optimal raw materials, 98%+ uptime).
+- **Mode GEI:** Most likely / expected operating emissions intensity (historical CAGR trajectory).
+- **Max GEI:** Worst-case scenario (poor fuel grade, unplanned shutdowns, equipment degradation).
+CLIC draws 10,000 independent samples per plant across these bounds to calculate true compliance probability and financial Value at Risk (VaR)."""
         },
 
         # Category 3: Price Discovery & Bidding Models
         {
             "cat": "💰 Price Discovery Engines & Bidding Mechanics",
-            "q": "What are the 5 Institutional Price Discovery Models in CLIC?",
-            "a": """CLIC provides 5 distinct micro-economic clearing models:
-            1. **Empirical Sealed Double-Auction:** Power exchange equilibrium (PXIL/IEX style). Supply bids are arranged ascendingly and demand bids descendingly. The unique intersection point determines the single Market Clearing Price (MCP).
-            2. **MACC-Anchored Rational Bidding:** Deficit facilities set their bid ceiling at their internal marginal abatement cost. If market CCCs exceed their internal technology abatement cost, rational plants drop their bids and abate internally.
-            3. **Random Tick / Stochastic Bidding:** Simulates bidding noise, bid-ask dispersion, and speculative market behavior around baseline price expectations.
-            4. **Statutory Penalty Arbitrage Model:** Under Section 14A of the Energy Conservation Act, non-compliant entities face penalties up to 2.0x market price. This engine sets demand bid ceilings at the statutory penalty boundary.
-            5. **Liquidity-Discounted / Spread-Adjusted Model:** Adjusts clearance prices for market illiquidity, exchange transaction fees, and bid-ask slippage during thin trading sessions."""
+            "q": "How does the Sealed Double-Auction Price Discovery Engine work on Power Exchanges?",
+            "a": """CLIC replicates the uniform-price double auction mechanics utilized by accredited power exchanges (PXIL / IEX):
+1. **Order Book Aggregation:** Collects supply bids from surplus facilities (ascending by price) and demand bids from deficit facilities (descending by price).
+2. **Merit-Order Matching:** Discretizes the market across 41 price ticks from ₹600 (Price Floor) to ₹1,600 (Price Cap) with a ₹25 tick step.
+3. **Equilibrium Settlement:** At the exact price tick where the absolute volume mismatch between aggregate demand and aggregate supply is minimized, the market clears at a single uniform **Market Clearing Price (MCP)**."""
         },
         {
             "cat": "💰 Price Discovery Engines & Bidding Mechanics",
-            "q": "What do Price Floor and Price Cap mean?",
-            "a": """To prevent excessive market volatility, the CCTS Market Authority establishes a **Price Band**:
-            - **Price Floor (Default ₹600/CCC):** The minimum price below which sell bids will not execute, protecting green investors and clean project returns.
-            - **Price Cap (Default ₹1,600/CCC):** The maximum price above which buy orders will not execute, shielding industrial producers from speculative price spikes."""
+            "q": "What are the 5 Institutional Price Discovery Models in CLIC?",
+            "a": """CLIC provides 5 distinct micro-economic clearing models:
+1. **Empirical Sealed Double-Auction:** Power exchange equilibrium (PXIL/IEX style). Supply bids are arranged ascendingly and demand bids descendingly to find equilibrium.
+2. **MACC-Anchored Rational Bidding:** Deficit facilities set their bid ceiling at their internal marginal abatement cost. If market CCCs exceed their internal technology abatement cost, rational plants drop their bids and abate internally.
+3. **Random Tick / Stochastic Bidding:** Simulates bidding noise, bid-ask dispersion, and speculative market behavior around baseline price expectations.
+4. **Statutory Penalty Arbitrage Model:** Under Section 14A of the Energy Conservation Act, non-compliant entities face penalties up to 2.0x market price. This engine sets demand bid ceilings at the statutory penalty boundary.
+5. **Liquidity-Discounted / Spread-Adjusted Model:** Adjusts clearance prices for market illiquidity, exchange transaction fees, and bid-ask slippage during thin trading sessions."""
+        },
+        {
+            "cat": "💰 Price Discovery Engines & Bidding Mechanics",
+            "q": "What do Price Floor (₹600) and Price Cap (₹1,600) mean?",
+            "a": """To prevent market collapse or predatory speculative price spikes, the regulatory framework institutes a statutory **Price Band**:
+- **Price Floor (Default ₹600 / CCC):** The reserve price below which sell bids will not execute, guaranteeing clean project investors a minimum revenue benchmark.
+- **Price Cap (Default ₹1,600 / CCC):** The maximum price ceiling above which buy bids will not clear, shielding obligated entities from run-away compliance inflation."""
+        },
+        {
+            "cat": "💰 Price Discovery Engines & Bidding Mechanics",
+            "q": "What is the Tranche Procurement Timing Strategy (Q1–Q4 Dollar-Cost Averaging)?",
+            "a": """Under CCTS, waiting until the final June–July statutory true-up rush causes severe illiquidity and price spikes. CLIC formulates an institutional dollar-cost averaging schedule across 4 quarterly sessions:
+- **Q1 (August):** Procure 30% of projected shortfall (captures early liquidity post-gazette).
+- **Q2 (December):** Procure 35% of projected shortfall (mid-year surplus monetization).
+- **Q3 (April):** Procure 25% of projected shortfall (pre-audit adjustments).
+- **Q4 (June–July):** Procure maximum 10% (strict avoidance of spot-market true-up squeeze)."""
         },
 
         # Category 4: MACC Decision Studio
         {
             "cat": "🏭 MACC Decision Studio & Abatement Economics",
             "q": "What is a Marginal Abatement Cost Curve (MACC) and the 'Abate vs. Buy' Golden Rule?",
-            "a": """A MACC ranks internal decarbonization projects by cost per tonne of CO₂ avoided (₹/tCO₂).
-            **The Golden Rule of Carbon Economics:**
-            - If Project Abatement Cost ($\\text{MAC}$) < Market Clearing Price ($\\text{MCP}$): **ABATE INTERNALLY**. It is cheaper to execute the internal project than buying certificates on the exchange.
-            - If Project Abatement Cost ($\\text{MAC}$) > Market Clearing Price ($\\text{MCP}$): **COMPLY VIA MARKET**. It is economically superior to purchase CCCs on PXIL/IEX than undertaking expensive capital projects.
-            **Levers Modeled in CLIC:** Waste Heat Recovery (WHR), Alternative Fuel & Raw Materials (AFR), Biomass Co-firing, Clinker Reduction, Hydrogen-DRI, and Carbon Capture."""
+            "a": """A MACC ranks internal decarbonization projects by Levelized Cost of Abatement per tonne of CO₂ avoided (₹ / tCO₂e).
+**The Golden Rule of Carbon Economics:**
+- If Project Abatement Cost ($\\text{MAC}$) < Market Clearing Price ($\\text{MCP}$): **ABATE INTERNALLY**. It is cheaper to execute internal capex than purchasing certificates on the exchange.
+- If Project Abatement Cost ($\\text{MAC}$) > Market Clearing Price ($\\text{MCP}$): **COMPLY VIA MARKET**. It is economically superior to purchase CCCs on PXIL/IEX than undertaking expensive, low-return capital projects.
+**Levers Modeled in CLIC:** Waste Heat Recovery (WHR), Alternative Fuel Resources (AFR), Biomass Co-firing, Solar PPAs, Kiln Electrification, and CCUS."""
         },
         {
             "cat": "🏭 MACC Decision Studio & Abatement Economics",
@@ -836,37 +914,37 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
             "cat": "🌍 CBAM (Carbon Border Adjustment Mechanism)",
             "q": "How does EU CBAM Article 9 interact with Indian CCTS?",
             "a": """The EU CBAM levies a carbon tariff on steel, aluminum, and cement imported into Europe.
-            **EU CBAM Regulation Article 9 (Carbon Price Paid in Origin):**
-            Importers into the EU are legally entitled to deduct the explicit carbon price paid in the exporting country.
-            - If an Indian steel exporter pays ₹800/tCO₂ under CCTS or retires verified CCCs, this amount (~€8.80/t) is **deducted 1:1** from their EU CBAM liability at European customs.
-            - CLIC calculates your plant's export exposure, net CBAM savings, and net landed European cost."""
+**EU CBAM Regulation Article 9 (Carbon Price Paid in Origin):**
+Importers into the EU are legally entitled to deduct the explicit carbon price paid in the exporting country.
+- If an Indian steel exporter pays ₹800/tCO₂ under CCTS or retires verified CCCs, this amount (~€8.80/t) is **deducted 1:1** from their EU CBAM liability at European customs.
+- CLIC calculates your plant's export exposure, net CBAM savings, and net landed European cost."""
         },
 
         # Category 6: Simulation Controls & Workflow
         {
             "cat": "🚀 Simulation Controls & Execution Workflow",
-            "q": "What does the green '🚀 Run Full End-to-End Simulation' button do?",
+            "q": "What does '🚀 Execute Full Market Settlement' do?",
             "a": """It executes the complete end-to-end analytics pipeline in a synchronized multi-stage workflow:
-            1. Ingests all 248 plant inputs and compliance year overrides.
-            2. Runs 10,000 Monte Carlo draws across all facilities.
-            3. Feeds stochastic supply and demand volumes into the 5 double-auction price discovery engines.
-            4. Resolves merit-order equilibrium, clearing price (MCP), traded volume, and VaR.
-            5. Evaluates MACC abatement decisions and updates balance sheet exposure and corporate reports."""
+1. Ingests all 248 plant inputs and compliance year overrides.
+2. Runs 10,000 Monte Carlo draws across all facilities.
+3. Feeds stochastic supply and demand volumes into the 5 double-auction price discovery engines.
+4. Resolves merit-order equilibrium, clearing price (MCP), traded volume, and VaR.
+5. Evaluates MACC abatement decisions and updates balance sheet exposure and corporate reports."""
         },
         {
             "cat": "🚀 Simulation Controls & Execution Workflow",
-            "q": "What is the difference between Simulation 1, Simulation 2, and End-to-End?",
-            "a": """- **Simulation 1 (10,000 Monte Carlo Draws):** Focuses solely on engineering and operational uncertainty to compute plant-level and national gross demand (deficits) and gross supply (surplus credits).
-            - **Simulation 2 (5,000 Price Discovery Sessions):** Focuses on market clearing, matching supply and demand curves across 5 auction engines to establish the equilibrium Market Clearing Price (MCP).
-            - **End-to-End Simulation:** Runs both engines back-to-back, dynamically piping Monte Carlo outcomes into the market clearing auction, evaluating MACC abatement decisions, and calculating final financial provisioning."""
+            "q": "What is the difference between the Stochastic PERT Engine and Double-Auction Clearance?",
+            "a": """- **Stochastic PERT Engine (10,000 Monte Carlo Draws):** Focuses on engineering and operational uncertainty to compute plant-level and national gross demand (deficits) and gross supply (surplus credits).
+- **Double-Auction Clearance (5,000 Sessions):** Focuses on market clearing, matching supply and demand curves across 5 auction engines to establish the equilibrium Market Clearing Price (MCP).
+- **Full Market Settlement:** Runs both engines synchronously, piping Monte Carlo outcomes directly into auction clearing and MACC financial trade-offs."""
         },
         {
             "cat": "🚀 Simulation Controls & Execution Workflow",
             "q": "What do P10, P50 (Median), and P90 Net Position mean?",
             "a": """From the 10,000 Monte Carlo iterations, CLIC computes probabilistic confidence intervals:
-            - **P10 (Optimistic):** 10th percentile outcome — lowest deficit or highest surplus.
-            - **P50 (Median / Expected):** The 50th percentile most probable central outcome.
-            - **P90 (Conservative / Downside Risk):** 90th percentile stress scenario — highest deficit or lowest surplus. Treasuries use P90 for conservative balance-sheet provisioning."""
+- **P10 (Optimistic):** 10th percentile outcome — lowest deficit or highest surplus.
+- **P50 (Median / Expected):** The 50th percentile most probable central outcome.
+- **P90 (Conservative / Downside Risk):** 90th percentile stress scenario — highest deficit or lowest surplus. Treasuries use P90 for conservative balance-sheet provisioning."""
         },
 
         # Category 7: Multi-Year Forecasting
@@ -886,9 +964,9 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
             "cat": "📋 Data Governance & Support",
             "q": "How can I contact Climactio Private Services Limited for enterprise advisory or technical support?",
             "a": """**Climactio Private Services Limited**
-            - **Phone:** +91 8660310017
-            - **Email:** Kaustav@Climactio.In
-            - **Corporate Address:** 3rd Floor, Raj Pinnacle, Doddanekundi Industrial Area, Bangalore – 560048."""
+- **Phone:** +91 8660310017
+- **Email:** Kaustav@Climactio.In
+- **Corporate Address:** 3rd Floor, Raj Pinnacle, Doddanekundi Industrial Area, Bangalore – 560048."""
         }
     ]
 
@@ -903,7 +981,7 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
         filtered_faqs = faqs
 
     if not filtered_faqs:
-        st.warning(f"No FAQ entries found matching '{search_q}'. Try a different keyword like 'shock', 'MACC', 'banking', or 'CBAM'.")
+        st.warning(f"No FAQ entries found matching '{search_q}'. Try a different keyword like 'intensity', 'inter-netting', 'shock', 'MACC', 'banking', or 'CBAM'.")
         return
 
     # Group by category
@@ -918,6 +996,7 @@ def render_knowledge_base_faq(portal_type: str = "corporate"):
         for item in cat_items:
             with st.expander(f"📌 {item['q']}", expanded=(len(filtered_faqs) <= 3)):
                 st.markdown(item["a"])
+
 
 def _ss(key, default=None):
     if key not in st.session_state:
@@ -983,6 +1062,33 @@ def render_company_header(comp_name: str):
 </div>""",
         unsafe_allow_html=True
     )
+
+
+def render_market_ticker_strip(comp_name: str = None, compliance_year: int = 2026):
+    dark = is_dark_theme()
+    bg = "#0d1522" if dark else "#f8fafc"
+    border = "#1e293b" if dark else "#e2e8f0"
+    txt_lbl = "#94a3b8" if dark else "#64748b"
+    txt_val = "#f8fafc" if dark else "#0f172a"
+    accent_green = "#10b981"
+    
+    html = f"""<div style="background:{bg}; border: 1.5px solid {border}; border-radius: 10px; padding: 10px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+    <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; color: {accent_green}; letter-spacing: 0.5px;">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: {accent_green}; box-shadow: 0 0 6px {accent_green};"></span>
+        CCTS CYCLE {compliance_year} ACTIVE
+    </span>
+    <span style="color: {border};">|</span>
+    <span style="font-size: 12px; color: {txt_lbl}; font-weight: 600;">STATUTORY REGIME:</span>
+    <span style="font-size: 12.5px; font-weight: 800; color: {txt_val};">INTENSITY-BASED (BASELINE & CREDIT)</span>
+</div>
+<div style="display: flex; align-items: center; gap: 18px; font-family: 'JetBrains Mono', 'Roboto Mono', Menlo, monospace; font-size: 12px; flex-wrap: wrap;">
+    <div><span style="color: {txt_lbl}; font-size: 11px;">PRICE BAND: </span><b style="color: {txt_val};">₹600 - ₹1,600</b></div>
+    <div><span style="color: {txt_lbl}; font-size: 11px;">SETTLEMENT: </span><b style="color: #38bdf8;">T+2 UNIFORM DOUBLE AUCTION</b></div>
+    <div><span style="color: {txt_lbl}; font-size: 11px;">INTER-NETTING: </span><b style="color: #f43f5e; background: rgba(244,63,94,0.12); padding: 2px 6px; border-radius: 4px;">PROHIBITED (BEE)</b></div>
+</div>
+</div>"""
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_sidebar_branding():
@@ -1966,6 +2072,7 @@ if _ss("role") == "corp":
     # Render Announcement Bar at the Top
     render_news_banner()
     render_company_header(comp)
+    render_market_ticker_strip(comp_name=comp, compliance_year=compliance_yr)
 
     from engine.data_pipeline import load_main_sheet_from_excel, add_sector_column, apply_sidebar_adjustments
     from engine.macc_cbam import load_macc, get_sector_emissions_mtco2, compute_plant_macc_table, get_marginal_abatement_cap, compute_cbam_liability
@@ -2127,14 +2234,18 @@ if _ss("role") == "corp":
     sim_market_df = apply_sidebar_adjustments(sim_market_df, compliance_yr, banking_carry_pct, cuf_shock_val)
     my_active_plants = sim_market_df.loc[my_indices].copy()
 
-    # Central Simulation Action Console
-    col_sim1, col_sim2, col_sim3 = st.columns([1, 1, 1.4])
+    # Quantitative Simulation & Market Settlement Deck
+    st.markdown("""<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span style="font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px;">⚡ Quantitative Simulation & Market Settlement Deck</span>
+        <span style="font-size: 11.5px; color: #10b981; font-weight: 700;">● Monte Carlo PERT Engine Active</span>
+    </div>""", unsafe_allow_html=True)
+    col_sim1, col_sim2, col_sim3 = st.columns([1.1, 1.1, 1.4])
     with col_sim1:
-        run_sim1 = st.button("⚡ 1. Run Demand & Supply (10k MC)", type="secondary", use_container_width=True, key="corp_central_sim1_btn", help="Simulates 10,000 stochastic PERT Monte Carlo draws across all facilities to determine probability-weighted gross compliance deficits and surplus certificate volumes.")
+        run_sim1 = st.button("⚡ Stochastic PERT Engine (10k Draws)", type="secondary", use_container_width=True, key="corp_central_sim1_btn", help="Simulates 10,000 stochastic PERT Monte Carlo draws across all facilities to determine probability-weighted gross compliance deficits and surplus certificate volumes.")
     with col_sim2:
-        run_sim2 = st.button("💰 2. Run Price Discovery (5k Sessions)", type="secondary", use_container_width=True, key="corp_central_sim2_btn", help="Simulates 5,000 sealed double-auction sessions across power exchanges (PXIL/IEX style) to determine merit-order clearance price (MCP) and liquidity depth.")
+        run_sim2 = st.button("⚖️ Double-Auction Clearance (5k Runs)", type="secondary", use_container_width=True, key="corp_central_sim2_btn", help="Simulates 5,000 sealed double-auction sessions across power exchanges (PXIL/IEX style) to determine merit-order clearance price (MCP) and liquidity depth.")
     with col_sim3:
-        run_both = st.button("🚀 3. Run Full End-to-End Simulation", type="primary", use_container_width=True, key="corp_central_both_btn", help="Synchronously runs 10k Monte Carlo, double-auction clearing, MACC abatement decisions, and financial provisioning.")
+        run_both = st.button("🚀 Execute Full Market Settlement", type="primary", use_container_width=True, key="corp_central_both_btn", help="Synchronously runs 10k Monte Carlo, double-auction clearing, MACC abatement decisions, and financial provisioning.")
 
     # --- Simulation 1 Execution ---
     if run_sim1 or run_both:
@@ -2394,7 +2505,7 @@ Simulates 10,000 stochastic PERT iterations across all company installations to 
             fig_bar.update_layout(title=f"{comp} — Net CCC Surplus/Deficit Position by Facility", xaxis_title="Registration Number", yaxis_title="Net Position (CCC)", template=get_plotly_template(), height=380)
             st.plotly_chart(fig_bar, use_container_width=True)
         else:
-            st.info("👆 Click **'⚡ 1. Run Demand & Supply (10k MC)'** above to simulate portfolio compliance.")
+            st.info("👆 Click **'⚡ Stochastic PERT Engine (10k Draws)'** or **'🚀 Execute Full Market Settlement'** in the cockpit above to simulate portfolio compliance.")
 
     # Tab 3: Price Discovery (All 3 Graphs with Descriptions)
     with tab_price:
@@ -2794,7 +2905,7 @@ Provides macro-level visibility into national CCTS market fundamentals across al
             b3.metric("Relative Efficiency", f"{((avg_my_bgei - avg_sec_bgei) / avg_sec_bgei) * 100:+.1f}%",
                       delta="Cleaner than peers" if avg_my_bgei < avg_sec_bgei else "Higher emissions than peers", delta_color="inverse")
         else:
-            st.info("👆 Click **'⚡ 1. Run Demand & Supply (10k MC)'** above to view macro market intelligence.")
+            st.info("👆 Click **'⚡ Stochastic PERT Engine (10k Draws)'** or **'🚀 Execute Full Market Settlement'** in the cockpit above to view macro market intelligence.")
 
     # Tab 6: CBAM
     with tab_cbam:
@@ -2970,7 +3081,7 @@ Quantifies export tariff exposure under the European Union Carbon Border Adjustm
                     use_container_width=True, hide_index=True
                 )
         else:
-            st.info("👆 Click **'⚡ 1. Run Demand & Supply (10k MC)'** above to calculate CBAM exposure.")
+            st.info("👆 Click **'⚡ Stochastic PERT Engine (10k Draws)'** or **'🚀 Execute Full Market Settlement'** in the cockpit above to calculate CBAM exposure.")
 
     # Tab 7: Decarbonisation Roadmap (2024–2030) & Data Intake Form
     with tab_decarb:
@@ -3938,6 +4049,7 @@ if _ss("role") == "admin":
     )
 
     render_news_banner()
+    render_market_ticker_strip(compliance_year=compliance_year)
 
     # Model Controls Sidebar
     with st.sidebar:
@@ -4006,13 +4118,17 @@ if _ss("role") == "admin":
     )
 
     # Central Simulation Action Console (Admin)
-    c_adm_s1, c_adm_s2, c_adm_s3 = st.columns([1, 1, 1.4])
+    st.markdown("""<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span style="font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px;">⚡ National Simulation & Market Settlement Deck</span>
+        <span style="font-size: 11.5px; color: #10b981; font-weight: 700;">● National 248-Facility Order Book Active</span>
+    </div>""", unsafe_allow_html=True)
+    c_adm_s1, c_adm_s2, c_adm_s3 = st.columns([1.1, 1.1, 1.4])
     with c_adm_s1:
-        btn_run_mc = st.button("⚡ 1. Run Demand & Supply (10k MC)", type="secondary", use_container_width=True, key="admin_central_run_mc_btn", help="Simulates 10,000 Monte Carlo draws across all 248 national facilities to compute national gross demand and supply.")
+        btn_run_mc = st.button("⚡ Stochastic PERT Engine (10k Draws)", type="secondary", use_container_width=True, key="admin_central_run_mc_btn", help="Simulates 10,000 Monte Carlo draws across all 248 national facilities to compute national gross demand and supply.")
     with c_adm_s2:
-        btn_run_pd = st.button("💰 2. Run Price Discovery (5k Sessions)", type="secondary", use_container_width=True, key="admin_central_run_pd_btn", help="Executes 5,000 double-auction clearing sessions across 5 institutional pricing models.")
+        btn_run_pd = st.button("⚖️ Double-Auction Clearance (5k Runs)", type="secondary", use_container_width=True, key="admin_central_run_pd_btn", help="Executes 5,000 double-auction clearing sessions across 5 institutional pricing models.")
     with c_adm_s3:
-        btn_run_full = st.button("🚀 3. Run Full End-to-End Simulation", type="primary", use_container_width=True, key="admin_central_run_full_btn", help="Synchronously runs 10k Monte Carlo, 5 double-auction engines, MACC abatement evaluation, and national risk analytics.")
+        btn_run_full = st.button("🚀 Execute Full Market Settlement", type="primary", use_container_width=True, key="admin_central_run_full_btn", help="Synchronously runs 10k Monte Carlo, 5 double-auction engines, MACC abatement evaluation, and national risk analytics.")
 
     with st.sidebar:
         st.divider()
@@ -4478,7 +4594,7 @@ Executes a 10,000-iteration stochastic PERT trial across all 248 industrial inst
                 use_container_width=True, hide_index=True
             )
         else:
-            st.info("👆 Click **'⚡ 1. Run Demand & Supply (10k MC)'** above to execute Monte Carlo simulations.")
+            st.info("👆 Click **'⚡ Stochastic PERT Engine (10k Draws)'** or **'🚀 Execute Full Market Settlement'** in the cockpit above to execute Monte Carlo simulations.")
 
     # -------------------- Tab 3: Price Discovery --------------------
     with tab_price:
